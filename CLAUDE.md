@@ -17,7 +17,7 @@ Use pnpm — `.npmrc` sets `public-hoist-pattern[]=*@radix-ui/*` for shadcn unde
 
 There is no test suite.
 
-Production runs on a VPS (Node + PM2 + Nginx + Certbot); see `DEPLOY.md`, `ecosystem.config.cjs`, `deploy/nginx.conf.example` and `scripts/deploy.sh`.
+Production runs on a VPS (Node + PM2 + Nginx + Certbot), app on 127.0.0.1:3001 by default (`PORT` overrides it in `ecosystem.config.cjs`); see `DEPLOY.md`, `ecosystem.config.cjs`, `deploy/nginx.conf.example` and `scripts/deploy.sh`.
 
 ## Architecture
 
