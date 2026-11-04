@@ -3,7 +3,7 @@
 Le site est une application Next.js. Sur le serveur, elle tourne avec Node.js, reste allumée grâce à PM2 et passe derrière Nginx, qui gère le domaine et le HTTPS (certificat Let's Encrypt).
 
 ```
-Visiteur ──HTTPS──▶ Nginx (80/443) ──▶ Next.js sur 127.0.0.1:3000 (PM2)
+Visiteur ──HTTPS──▶ Nginx (80/443) ──▶ Next.js sur 127.0.0.1:3001 (PM2)
 ```
 
 Les commandes ci-dessous supposent Ubuntu ou Debian, un utilisateur avec `sudo` et un nom de domaine dont l'enregistrement **A** pointe vers l'IP du VPS.
@@ -30,7 +30,7 @@ PM2, pour garder le site allumé et le relancer après un redémarrage :
 sudo npm install -g pm2
 ```
 
-Pare-feu : on ouvre seulement SSH, HTTP et HTTPS. Le port 3000 reste fermé, seul Nginx y accède.
+Pare-feu : on ouvre seulement SSH, HTTP et HTTPS. Le port de l’application (3001) reste fermé, seul Nginx y accède.
 
 ```bash
 sudo ufw allow OpenSSH
@@ -64,7 +64,7 @@ pm2 startup
 Vérifie que le site répond en local :
 
 ```bash
-curl -I http://127.0.0.1:3000
+curl -I http://127.0.0.1:3001
 ```
 
 ## 4. Nginx et HTTPS
@@ -96,6 +96,24 @@ cd /var/www/portfolio
 
 Le script récupère la branche, installe les dépendances, refait le build et recharge PM2. Il remet le dossier exactement à l'état de GitHub (`git reset --hard`) : ne modifie jamais de fichiers directement sur le serveur.
 
+## Changer de port
+
+Le site écoute sur **3001**, car le port 3000 est souvent déjà pris par un autre projet. Pour vérifier quels ports sont occupés :
+
+```bash
+sudo ss -ltnp | grep -E ':30[0-9]{2}'
+```
+
+Pour utiliser un autre port, par exemple 3005 :
+
+```bash
+pm2 delete portfolio
+PORT=3005 pm2 start ecosystem.config.cjs
+pm2 save
+```
+
+Puis remplace `3001` par `3005` dans les deux `proxy_pass` de `/etc/nginx/sites-available/portfolio` et recharge Nginx (`sudo nginx -t && sudo systemctl reload nginx`).
+
 ## Commandes utiles
 
 | Besoin | Commande |
@@ -108,7 +126,7 @@ Le script récupère la branche, installe les dépendances, refait le build et r
 
 ## En cas de problème
 
-- **502 Bad Gateway** : l'application ne tourne pas. Regarde `pm2 status` et `pm2 logs portfolio`.
+- **502 Bad Gateway** ou `curl: (7) Failed to connect` : l'application ne tourne pas. Regarde `pm2 status` et `pm2 logs portfolio`. Si les logs affichent `EADDRINUSE`, le port est déjà pris par un autre projet : voir « Changer de port ».
 - **Le build s'arrête sans message (« Killed »)** : le VPS manque de mémoire. Ajoute 2 Go de swap :
   ```bash
   sudo fallocate -l 2G /swapfile && sudo chmod 600 /swapfile

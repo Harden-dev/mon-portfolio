@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
+import { motion, useReducedMotion } from "motion/react"
 import { ArrowUpRight, ChevronDown, Lock } from "lucide-react"
 
 import { CustomIcon } from "@/components/portfolio/custom-icon"
@@ -62,7 +62,7 @@ function ProjectCard({
   const site = useSiteCopy()
 
   return (
-    <article className="group flex h-full flex-col rounded-2xl border border-line bg-panel p-6 transition duration-300 hover:-translate-y-0.5 hover:border-zinc-300 motion-reduce:hover:translate-y-0">
+    <article className="group flex h-full flex-col rounded-2xl border border-line bg-panel p-6 transition-colors duration-300 hover:border-zinc-300">
       <div className="flex items-baseline justify-between gap-3">
         <span className="text-sm font-medium text-brand tabular-nums">
           {String(index + 1).padStart(2, "0")}
@@ -141,6 +141,28 @@ export function ProjectGrid({
   const site = useSiteCopy()
   const reduce = useReducedMotion()
   const [expanded, setExpanded] = React.useState(false)
+  const buttonRef = React.useRef<HTMLButtonElement>(null)
+  /* Where the button sat on screen before collapsing. */
+  const anchorTop = React.useRef<number | null>(null)
+
+  const toggle = () => {
+    if (expanded && buttonRef.current) {
+      anchorTop.current = buttonRef.current.getBoundingClientRect().top
+    }
+    setExpanded((v) => !v)
+  }
+
+  /* Collapsing removes seven cards above the button. Keep the button where
+     it was under the pointer instead of dropping the reader further down
+     the page. */
+  React.useLayoutEffect(() => {
+    const top = anchorTop.current
+    const button = buttonRef.current
+    if (expanded || top === null || !button) return
+    anchorTop.current = null
+    const shift = button.getBoundingClientRect().top - top
+    window.scrollTo({ top: window.scrollY + shift, behavior: "instant" })
+  }, [expanded])
 
   const first = projects.slice(0, INITIAL_COUNT)
   const rest = projects.slice(INITIAL_COUNT)
@@ -155,28 +177,28 @@ export function ProjectGrid({
             </Reveal>
           </li>
         ))}
-        <AnimatePresence initial={false}>
-          {expanded
-            ? rest.map((project, i) => (
-                <motion.li
-                  key={project.id}
-                  initial={reduce ? false : { opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={reduce ? undefined : { opacity: 0, y: 8 }}
-                  transition={{ duration: 0.45, ease: EASE, delay: i * 0.04 }}
-                >
-                  <ProjectCard project={project} index={INITIAL_COUNT + i} />
-                </motion.li>
-              ))
-            : null}
-        </AnimatePresence>
+        {/* No exit animation: the cards must leave at once so the scroll
+            anchor below measures the final layout. */}
+        {expanded
+          ? rest.map((project, i) => (
+              <motion.li
+                key={project.id}
+                initial={reduce ? false : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, ease: EASE, delay: i * 0.04 }}
+              >
+                <ProjectCard project={project} index={INITIAL_COUNT + i} />
+              </motion.li>
+            ))
+          : null}
       </ul>
 
       {rest.length > 0 ? (
         <div className="mt-10 flex justify-center">
           <button
             type="button"
-            onClick={() => setExpanded((v) => !v)}
+            ref={buttonRef}
+            onClick={toggle}
             aria-expanded={expanded}
             className="inline-flex h-11 items-center gap-2 rounded-full border border-line bg-panel px-5 text-sm font-medium text-ink transition hover:border-zinc-300 hover:bg-zinc-50"
           >

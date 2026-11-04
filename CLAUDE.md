@@ -17,7 +17,7 @@ Use pnpm — `.npmrc` sets `public-hoist-pattern[]=*@radix-ui/*` for shadcn unde
 
 There is no test suite.
 
-Production runs on a VPS (Node + PM2 + Nginx + Certbot); see `DEPLOY.md`, `ecosystem.config.cjs`, `deploy/nginx.conf.example` and `scripts/deploy.sh`.
+Production runs on a VPS (Node + PM2 + Nginx + Certbot), app on 127.0.0.1:3001 by default (`PORT` overrides it in `ecosystem.config.cjs`); see `DEPLOY.md`, `ecosystem.config.cjs`, `deploy/nginx.conf.example` and `scripts/deploy.sh`.
 
 ## Architecture
 
@@ -40,15 +40,22 @@ A light, professional page set like an editorial layout: light grey ground (`pap
 
 - **Palette** in `:root` of `app/globals.css`, mapped via `@theme inline`: `paper`, `panel`, `ink` / `soft` / `faint`, `line`, `brand` (#ea580c) + `brand-soft`, `live` (green). Primary buttons are `bg-ink` pills, secondary are white pills with a `zinc-300` border.
 - **One accent.** `brand` is used for the hero underline, section eyebrows and the `01`, `02`… numbers — never large filled areas. `live` means "online" and nothing else.
-- **Numbered, editorial structure.** Hero: plain "name — role" line, large left-aligned title with the highlighted phrase underlined in brand, note + actions, stats on a rule. Projects are numbered cards (`project-grid.tsx`: number, domain · year meta line, title, description, stack chips, status), first 6 shown then "Show all". The approach section (`approach-section.tsx`) is three numbered columns separated by rules.
+- **Numbered, editorial structure.** Hero: plain "name, role" line, large left-aligned title with the highlighted phrase underlined in brand, note + actions, stats on a rule. Projects are numbered cards (`project-grid.tsx`: number, domain · year meta line, title, description, stack chips, status), first 6 shown then "Show all". The approach section (`approach-section.tsx`) is three numbered columns separated by rules.
 - **One family.** Geist (`--font-geist`). Hierarchy from size and weight; figures use `tabular-nums`.
 - Section headings go through `SectionHead` (`components/portfolio/motion.tsx`).
 - Nav hrefs in the bundles are bare hashes (`#work`); header and footer render them as `/#work` so they still work from the 404.
 - Only a light theme is implemented.
 
-### Motion — framer-motion, light and short
+### Motion: Motion (`motion/react`), light and short
 
-`components/portfolio/motion.tsx` exports `EASE` and `Reveal` (fade + 14px rise, once, on scroll into view). Every motion uses `useReducedMotion()` and falls back to the end state. The motions are: hero settle-in on load, `Reveal` on sections and cards, CSS hover transitions (small card lift, arrow nudge, chip tint), and the "Show all projects" cards animating in via `AnimatePresence`. Nothing loops. Keep durations ≤ 0.6s and distances small.
+The library is Motion (the `motion` package, formerly framer-motion); import from `motion/react`. `components/portfolio/motion.tsx` exports `EASE` and `Reveal` (fade + 14px rise, once, on scroll into view). Every motion respects reduced motion and falls back to the end state. The motions are:
+
+1. **Hero entrance**: pure CSS (`.hero-in` / `.hero-rise` in `globals.css`), so it plays on first paint without waiting for hydration. The `<h1>` only slides and is never transparent: it is the LCP element and must paint immediately. Do not move it back to a JS animation that starts at `opacity: 0`.
+2. **`Reveal`** on section heads, cards, about, stack and contact. Its server HTML starts at `opacity:0`; a `<noscript>` style in `app/layout.tsx` un-hides it when JavaScript is off.
+3. **Hover**: colour/border transitions and the arrow nudge only. Cards do **not** lift on hover, because they are not clickable; only add a lift if the whole card becomes a link.
+4. **Show all projects**: extra cards fade in. Collapsing removes them at once (no exit animation) and the grid scrolls so the button stays under the pointer.
+
+Nothing loops. Keep durations ≤ 0.6s and distances small.
 
 ### Tech icons
 

@@ -33,6 +33,13 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn(geist.variable, "font-sans")}
     >
+      <head>
+        {/* Scroll reveals start hidden in the server HTML and are shown by
+            JavaScript. Without JavaScript, show everything straight away. */}
+        <noscript>
+          <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+      </head>
       <body className="relative min-h-svh overflow-x-clip bg-paper text-ink">
         <LocaleProvider>
           <div className="relative flex min-h-svh flex-col">
