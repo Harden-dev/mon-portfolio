@@ -1,0 +1,7 @@
+# pnpm 10 requires an explicit decision for each package that runs install
+# scripts. sharp backs next/image optimisation and unrs-resolver backs the
+# eslint import resolver, so both must build; msw is not used here.
+allowBuilds:
+  msw: false
+  sharp: true
+  unrs-resolver: true

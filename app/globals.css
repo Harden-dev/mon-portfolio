@@ -1,0 +1,419 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * ── Night shift ───────────────────────────────────────────────────────────
+ * Six systems that keep running while nobody is watching: security rosters,
+ * worker matching, shareholdings, print orders. So the page is a control
+ * board — dark ground, display type at full volume, and one hot colour used
+ * as a FIELD rather than a trim. Jade means running. Nothing else is
+ * coloured, which is what keeps the volt loud.
+ */
+
+@theme inline {
+  --font-display: var(--font-space-grotesk);
+  --font-sans: var(--font-dm-sans);
+  --font-heading: var(--font-space-grotesk);
+
+  --color-void: var(--void);
+  --color-deep: var(--deep);
+  --color-surface: var(--surface);
+  --color-chalk: var(--chalk);
+  --color-dim: var(--dim);
+  --color-volt: var(--volt);
+  --color-jade: var(--jade);
+  --color-line: var(--line);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+}
+
+:root {
+  --void: #0a0b12;
+  --deep: #10121d;
+  --surface: #171a29;
+  --chalk: #f5f2ec;
+  --dim: #8b91a8;
+  --volt: #ff5a1f;
+  --jade: #00e28a;
+  --line: rgb(245 242 236 / 0.13);
+
+  --radius: 0px;
+
+  --background: var(--void);
+  --foreground: var(--chalk);
+  --card: var(--deep);
+  --card-foreground: var(--chalk);
+  --popover: var(--deep);
+  --popover-foreground: var(--chalk);
+  --primary: var(--volt);
+  --primary-foreground: var(--void);
+  --secondary: var(--surface);
+  --secondary-foreground: var(--chalk);
+  --muted: var(--surface);
+  --muted-foreground: var(--dim);
+  --accent: var(--surface);
+  --accent-foreground: var(--volt);
+  --destructive: #ff4d4d;
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--volt);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    background: var(--void);
+  }
+
+  body {
+    background: var(--void);
+    color: var(--chalk);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--volt);
+    color: var(--void);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--volt);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* ── Structure ──────────────────────────────────────────────────────────── */
+
+.sheet {
+  width: 100%;
+  max-width: 84rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .sheet {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* ── Type ───────────────────────────────────────────────────────────────── */
+
+/* The statement. Space Grotesk runs wide, so it is sized to keep the longest
+   line ("des systèmes,") inside the column from 375px up. */
+.statement {
+  font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+  font-size: clamp(2.3rem, 10.2vw, 7.75rem);
+}
+
+/* The counter-voice: the lines of the statement that answer the claim drop
+   out of Space Grotesk into DM Sans italic — the only italic display type. */
+.statement-accent {
+  font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+}
+
+.section-title {
+  font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-size: clamp(2rem, 4.6vw, 3.5rem);
+}
+
+.prose-col {
+  max-width: 58ch;
+  line-height: 1.62;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.wipe-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+.wipe-line > span {
+  display: block;
+  will-change: transform;
+}
+
+/* ── The board ──────────────────────────────────────────────────────────── */
+
+.entry {
+  position: relative;
+  display: block;
+  width: 100%;
+  border-top: 1px solid var(--line);
+  isolation: isolate;
+}
+
+.entry:last-of-type {
+  border-bottom: 1px solid var(--line);
+}
+
+/* A new year opens on a heavier rule, so the board reads in groups. */
+.entry[data-year-start="true"] {
+  border-top-color: rgb(245 242 236 / 0.34);
+}
+
+/* Focus always floods the row, so the ring sits inside it in the ground
+   colour — a volt ring on a volt field would vanish. */
+.entry > button:focus-visible {
+  outline-color: var(--void);
+  outline-offset: -5px;
+}
+
+/* The hot field, wiped in from the left by GSAP rather than by a CSS hover. */
+.entry-fill {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--volt);
+  transform: scaleX(0);
+  transform-origin: left;
+  will-change: transform;
+}
+
+/* When the field is up the row inverts wholesale — no half measures. */
+.entry[data-hot="true"] .entry-name,
+.entry[data-hot="true"] .entry-year,
+.entry[data-hot="true"] .entry-domain,
+.entry[data-hot="true"] .entry-status,
+.entry[data-hot="true"] .entry-body,
+.entry[data-hot="true"] .entry-stack,
+.entry[data-hot="true"] .entry-toggle {
+  color: var(--void);
+}
+
+.entry[data-hot="true"] .entry-status-dot {
+  background: var(--void);
+  border-color: var(--void);
+}
+
+.entry[data-hot="true"] .entry-status-dot[data-kind="building"] {
+  background: transparent;
+}
+
+.entry[data-hot="true"] .entry-link {
+  color: var(--void);
+  border-bottom-color: var(--void);
+}
+
+.entry-name {
+  font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-size: clamp(1.35rem, 2.7vw, 2.125rem);
+  color: var(--chalk);
+}
+
+.entry-name,
+.entry-year,
+.entry-domain,
+.entry-status,
+.entry-body,
+.entry-stack,
+.entry-toggle,
+.entry-link {
+  transition:
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.entry-status-dot {
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 9999px;
+  border: 1.5px solid var(--jade);
+  background: var(--jade);
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+/* Not running yet: a hollow ring in the type colour, never jade. */
+.entry-status-dot[data-kind="building"] {
+  border-color: currentColor;
+  background: transparent;
+}
+
+/* ── Split-flap board ───────────────────────────────────────────────────── */
+
+/* A departures board for the domains. Tiles are sized from the board's own
+   width (container units) so the longest domain always fits on one row. */
+.flap {
+  border-block: 1px solid var(--line);
+}
+
+.flap-index {
+  font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  background: var(--volt);
+  color: var(--void);
+}
+
+.flap-board {
+  container-type: inline-size;
+  min-width: 0;
+  flex: 1;
+}
+
+.flap-row {
+  --flap-gap: 2px;
+  --flap-cell: min(
+    2.4rem,
+    calc(
+      (100cqi - (var(--flap-cells) - 1) * var(--flap-gap)) / var(--flap-cells)
+    )
+  );
+  display: grid;
+  grid-template-columns: repeat(var(--flap-cells), var(--flap-cell));
+  gap: var(--flap-gap);
+}
+
+.flap-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(var(--flap-cell) * 1.42);
+  overflow: hidden;
+  background: var(--deep);
+  color: var(--chalk);
+  font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: calc(var(--flap-cell) * 0.92);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* The hinge every flap turns on. */
+.flap-cell::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--void);
+}
+
+.flap-static {
+  font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+/* ── Links and the one solid button ─────────────────────────────────────── */
+
+/* Text links keep their thin underline but get a 44px-tall hit area. */
+.link-hot,
+.link-quiet {
+  position: relative;
+}
+
+.link-hot::after,
+.link-quiet::after {
+  content: "";
+  position: absolute;
+  inset: -0.7rem -0.35rem;
+}
+
+.link-hot {
+  color: var(--chalk);
+  padding-bottom: 0.15rem;
+  border-bottom: 2px solid var(--volt);
+  transition: color 160ms ease;
+}
+
+.link-hot:hover {
+  color: var(--volt);
+}
+
+.link-quiet {
+  color: var(--dim);
+  padding-bottom: 0.15rem;
+  border-bottom: 1px solid transparent;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+.link-quiet:hover {
+  color: var(--chalk);
+  border-bottom-color: var(--volt);
+}
+
+.button-hot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--volt);
+  color: var(--void);
+  font-weight: 600;
+  padding: 1rem 2.25rem;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.button-hot:hover {
+  background: var(--chalk);
+  color: var(--void);
+}
