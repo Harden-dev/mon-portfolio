@@ -51,12 +51,15 @@ export type ResolvedSite = {
     mailHref: string
   }
   social: { github: string; linkedin: string }
+  aiTools: readonly { label: string; slug: string }[]
   ui: {
     /** Plain line above the hero title, after the name. */
     heroKicker: string
     /** Hero title, split so the middle phrase can carry the accent. */
     heroTitle: { before: string; highlight: string; after: string }
     heroNote: string
+    /** Small caption beside the hero orbit. */
+    orbitCaption: string
     stats: readonly StatEntry[]
     heroViewWork: string
     heroContact: string
@@ -345,6 +348,8 @@ const messages: Record<Locale, MessageBundle> = {
         { value: "4", label: "publicly online" },
         { value: "2023", label: "shipping since" },
       ],
+      orbitCaption:
+        "My daily toolkit: AI assistants around a Laravel and Vue stack.",
       heroViewWork: "View my work",
       heroContact: "Get in touch",
       kickers: {
@@ -469,6 +474,8 @@ const messages: Record<Locale, MessageBundle> = {
         { value: "4", label: "en ligne publiquement" },
         { value: "2023", label: "en production depuis" },
       ],
+      orbitCaption:
+        "Mon quotidien : des assistants IA autour d’une stack Laravel et Vue.",
       heroViewWork: "Voir mes projets",
       heroContact: "Me contacter",
       kickers: {
@@ -572,6 +579,7 @@ export function resolveSite(locale: Locale): ResolvedSite {
       mailHref: siteContactStatic.mailHref,
     },
     social: siteStatic.social,
+    aiTools: siteStatic.aiTools,
     ui: m.ui,
     approach: m.approach,
     stack: m.stack,

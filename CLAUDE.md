@@ -36,7 +36,7 @@ Because locale lives in client state rather than the URL, every component that r
 
 ### Design: light editorial
 
-A light, professional page set like an editorial layout: light grey ground (`paper` #f4f4f5), white cards and bands (`panel`), zinc ink, hairline borders, left-aligned headings. **No decorative effects that read as generated-UI**: no background grids or dot patterns, no glows, no gradient text, no blur-in, no pointer spotlights, no pills/badges above the hero, no logo marquees. Keep it that way.
+A light, professional page set like an editorial layout: light grey ground (`paper` #f4f4f5), white cards and bands (`panel`), zinc ink, hairline borders, left-aligned headings. One dark band (`bg-ink`) breaks the rhythm: the Approach section (`SectionHead dark`). Keep it to one. **No decorative effects that read as generated-UI**: no background grids or dot patterns, no glows, no gradient text, no blur-in, no pointer spotlights, no pills/badges above the hero, no logo marquees. Keep it that way. The one deliberate exception is the **hero orbit** (`hero-orbit.tsx`), asked for to catch recruiters' eyes: desktop only (`lg+`), behind the text on the right, AI tools (`siteStatic.aiTools`) on the inner ring and the stack on the middle ring around the monogram, with a caption card (`ui.orbitCaption`). Edit `aiTools` to match the tools actually used; each slug needs an entry in `ICON_BY_SLUG` (`custom-icon.tsx`): an `si*` import, or a hand-added mark like `OPENAI_ICON` (ChatGPT; Simple Icons dropped OpenAI).
 
 - **Palette** in `:root` of `app/globals.css`, mapped via `@theme inline`: `paper`, `panel`, `ink` / `soft` / `faint`, `line`, `brand` (#ea580c) + `brand-soft`, `live` (green). Primary buttons are `bg-ink` pills, secondary are white pills with a `zinc-300` border.
 - **One accent.** `brand` is used for the hero underline, section eyebrows and the `01`, `02`… numbers — never large filled areas. `live` means "online" and nothing else.
@@ -55,7 +55,9 @@ The library is Motion (the `motion` package, formerly framer-motion); import fro
 3. **Hover**: colour/border transitions and the arrow nudge only. Cards do **not** lift on hover, because they are not clickable; only add a lift if the whole card becomes a link.
 4. **Show all projects**: extra cards fade in. Collapsing removes them at once (no exit animation) and the grid scrolls so the button stays under the pointer.
 
-Nothing loops. Keep durations ≤ 0.6s and distances small.
+5. **Hero orbit**: rings and chips scale in with Motion on load, then the rings turn slowly through CSS (`.orbit-spin`, 55–140s per turn, chips counter-rotate to stay upright), and the whole piece drifts up to ~18px towards the pointer (spring). This is the only looping motion; under reduced motion it is still.
+
+Nothing else loops. Keep durations ≤ 0.6s and distances small.
 
 ### Tech icons
 

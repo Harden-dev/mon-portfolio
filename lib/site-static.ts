@@ -112,6 +112,14 @@ export const siteStatic = {
       stack: ["Laravel", "Media", "Auth"],
     },
   ] as const satisfies readonly SiteProjectStatic[],
+  /** AI tools used day to day, shown on the inner ring of the hero orbit.
+   *  Each slug must exist in `ICON_BY_SLUG` (custom-icon.tsx). */
+  aiTools: [
+    { label: "Claude", slug: "claude" },
+    { label: "ChatGPT", slug: "openai" },
+    { label: "Cursor", slug: "cursor" },
+    { label: "Gemini", slug: "googlegemini" },
+  ],
   social: {
     github: "https://github.com/Harden-dev",
     linkedin: "https://www.linkedin.com/in/kouame-michel-banh-003756202/",
