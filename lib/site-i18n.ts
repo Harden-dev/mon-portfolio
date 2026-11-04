@@ -37,7 +37,7 @@ export type ResolvedSite = {
   location: string
   tagline: string
   sourceSite: string
-  about: { body: string }
+  about: { title: string; body: string }
   timeline: readonly JourneyEntry[]
   nav: readonly { label: string; href: string }[]
   work: { title: string; subtitle: string }
@@ -52,33 +52,38 @@ export type ResolvedSite = {
   }
   social: { github: string; linkedin: string }
   ui: {
-    heroKicker: string
-    /** Display statement, one line per rendered row. */
-    heroLines: readonly string[]
-    /** Index of the first statement line set in the italic counter-voice. */
-    heroAccentFrom: number
+    /** Small pill above the hero title. */
+    heroBadge: string
+    /** Hero title, split so the middle phrase can carry the accent. */
+    heroTitle: { before: string; highlight: string; after: string }
     heroNote: string
     stats: readonly StatEntry[]
     heroViewWork: string
     heroContact: string
-    kickers: { projects: string; about: string; skills: string }
+    kickers: {
+      projects: string
+      about: string
+      skills: string
+      contact: string
+    }
     journeyTitle: string
+    facts: readonly { label: string; value: string }[]
     elsewhere: string
     viewProject: string
     gitHubProjectSuffix: string
-    colYear: string
-    colSystem: string
-    colDomain: string
-    colStatus: string
     statusLive: string
     statusPrivate: string
     statusBuilding: string
-    rowOpen: string
-    rowClose: string
+    showAllProjects: string
+    showFewerProjects: string
+    copyEmail: string
+    copied: string
+    marqueeLabel: string
     railLabel: string
     languageToggle: string
   }
   stack: {
+    title: string
     intro: string
     panelFrontend: string
     panelBackend: string
@@ -94,7 +99,7 @@ type MessageBundle = {
   role: string
   location: string
   tagline: string
-  about: { body: string }
+  about: { title: string; body: string }
   timeline: readonly JourneyEntry[]
   nav: readonly { label: string; href: string }[]
   work: { title: string; subtitle: string }
@@ -273,6 +278,7 @@ const messages: Record<Locale, MessageBundle> = {
     tagline:
       "Twelve production systems: utility connection requests, property subscriptions, AI CV screening, mobile-money point-of-sale tracking, security operations, domestic-work matching, shareholder records and print orders. Laravel and NestJS on the server, Vue and Nuxt in front.",
     about: {
+      title: "Software a business actually runs on",
       body: "I build the software a business actually runs on - the part that holds the records, decides who may see them, and still works on a Monday morning. Schema and secure APIs first, then the admin tools the staff live in, then the app the customer sees. Recent work is concentrated in Côte d’Ivoire: agent and shift management for a security firm, and a marketplace putting domestic workers in front of employers with moderation in between.",
     },
     timeline: [
@@ -308,49 +314,61 @@ const messages: Record<Locale, MessageBundle> = {
       { label: "Contact", href: "#contact" },
     ],
     work: {
-      title: "Twelve systems in service, one in the works",
+      title: "Selected projects",
       subtitle:
-        "Every one of them runs for a real business. Open a row for what it handles.",
+        "Business applications built for real companies in Côte d’Ivoire and Benin — from utility connection requests to shareholder portals.",
     },
     projects: projectsEn,
     contact: {
-      headline: "Hiring, or need one built?",
-      sub: "Tell me the problem and who has to use it. You get scope back, not a brochure.",
+      headline: "Have a project in mind, or a role to fill?",
+      sub: "Tell me the problem and who will use it. I’ll get back to you with a clear scope.",
       cta: "Email me",
     },
     ui: {
-      heroKicker: "Web developer, Abidjan, Côte d’Ivoire",
-      heroLines: ["I build", "systems,", "not just code."],
-      heroAccentFrom: 2,
+      heroBadge: "Full-stack web developer · Abidjan",
+      heroTitle: {
+        before: "I build web apps ",
+        highlight: "businesses run on",
+        after: ".",
+      },
       heroNote:
-        "Laravel and NestJS on the server, Vue and Nuxt in front - from the schema up to the screen the staff use all day.",
+        "Laravel and NestJS on the server, Vue and Nuxt in front — from the database schema to the screens teams use all day.",
       stats: [
-        { value: "12", label: "systems in production" },
-        { value: "04", label: "with role-based access" },
+        { value: "12", label: "projects in production" },
+        { value: "4", label: "publicly online" },
         { value: "2023", label: "shipping since" },
       ],
-      heroViewWork: "See the systems",
-      heroContact: "Email me",
-      kickers: { projects: "Work", about: "About", skills: "Stack" },
+      heroViewWork: "View my work",
+      heroContact: "Get in touch",
+      kickers: {
+        projects: "Work",
+        about: "About",
+        skills: "Stack",
+        contact: "Contact",
+      },
       journeyTitle: "Track record",
-      elsewhere: "Elsewhere",
-      viewProject: "Open the live site",
+      facts: [
+        { label: "Based in", value: "Abidjan, Côte d’Ivoire" },
+        { label: "Focus", value: "Business apps & secure APIs" },
+        { label: "Main stack", value: "Laravel, NestJS, Vue, Nuxt" },
+      ],
+      elsewhere: "Find me on",
+      viewProject: "Visit site",
       gitHubProjectSuffix: "on GitHub",
-      colYear: "In service",
-      colSystem: "System",
-      colDomain: "Domain",
-      colStatus: "Status",
-      statusLive: "Running",
-      statusPrivate: "Client-held",
+      statusLive: "Online",
+      statusPrivate: "Client project",
       statusBuilding: "In progress",
-      rowOpen: "Open entry",
-      rowClose: "Close entry",
+      showAllProjects: "Show all projects",
+      showFewerProjects: "Show fewer",
+      copyEmail: "Copy email",
+      copied: "Copied",
+      marqueeLabel: "Technologies I ship with",
       railLabel: "Sections",
       languageToggle: "Language",
     },
     stack: {
-      intro:
-        "What is actually in production behind the twelve systems above, server first.",
+      title: "Tools I use in production",
+      intro: "What actually runs behind the projects above, server first.",
       panelBackend: "Server & data",
       panelFrontend: "Client & interface",
     },
@@ -361,6 +379,7 @@ const messages: Record<Locale, MessageBundle> = {
     tagline:
       "Douze systèmes en production : demandes de branchement et de raccordement, souscription immobilière, tri de CV par IA, suivi de points de vente mobile money, opérations de sécurité, mise en relation domestique, registres d’actionnaires et commandes d’impression. Laravel et NestJS côté serveur, Vue et Nuxt côté interface.",
     about: {
+      title: "Le logiciel sur lequel une entreprise tourne",
       body: "Je construis le logiciel sur lequel une entreprise tourne vraiment - celui qui garde les dossiers, décide qui a le droit de les voir, et fonctionne encore le lundi matin. Le schéma et des APIs sécurisées d’abord, puis les outils d’administration dans lesquels les équipes passent leurs journées, puis l’application que le client voit. Mes travaux récents sont concentrés en Côte d’Ivoire : la gestion des agents et des vacations d’une société de sécurité, et une place de marché qui met des travailleurs domestiques en face d’employeurs, avec de la modération entre les deux.",
     },
     timeline: [
@@ -396,49 +415,62 @@ const messages: Record<Locale, MessageBundle> = {
       { label: "Contact", href: "#contact" },
     ],
     work: {
-      title: "Douze systèmes en service, un en chantier",
+      title: "Projets sélectionnés",
       subtitle:
-        "Chacun tourne pour une entreprise réelle. Ouvrez une ligne pour voir ce qu’il traite.",
+        "Des applications métier conçues pour de vraies entreprises en Côte d’Ivoire et au Bénin — des demandes de branchement aux portails actionnaires.",
     },
     projects: projectsFr,
     contact: {
-      headline: "Vous recrutez, ou il faut le construire ?",
-      sub: "Dites-moi le problème et qui devra s’en servir. Vous recevez un périmètre, pas une plaquette.",
+      headline: "Un projet en tête, ou un poste à pourvoir ?",
+      sub: "Décrivez-moi le besoin et qui va l’utiliser. Je reviens vers vous avec un périmètre clair.",
       cta: "M’écrire",
     },
     ui: {
-      heroKicker: "Développeur web, Abidjan, Côte d’Ivoire",
-      heroLines: ["Je construis", "des systèmes,", "pas juste", "du code."],
-      heroAccentFrom: 2,
+      heroBadge: "Développeur web full-stack · Abidjan",
+      heroTitle: {
+        before: "Je développe des applications web ",
+        highlight: "qui font tourner les entreprises",
+        after: ".",
+      },
       heroNote:
-        "Laravel et NestJS côté serveur, Vue et Nuxt côté interface - du schéma jusqu’à l’écran que les équipes utilisent toute la journée.",
+        "Laravel et NestJS côté serveur, Vue et Nuxt côté interface — du schéma de base de données jusqu’aux écrans que les équipes utilisent toute la journée.",
       stats: [
-        { value: "12", label: "systèmes en production" },
-        { value: "04", label: "avec gestion des rôles" },
+        { value: "12", label: "projets en production" },
+        { value: "4", label: "en ligne publiquement" },
         { value: "2023", label: "en production depuis" },
       ],
-      heroViewWork: "Voir les systèmes",
-      heroContact: "M’écrire",
-      kickers: { projects: "Projets", about: "À propos", skills: "Stack" },
+      heroViewWork: "Voir mes projets",
+      heroContact: "Me contacter",
+      kickers: {
+        projects: "Projets",
+        about: "À propos",
+        skills: "Stack",
+        contact: "Contact",
+      },
       journeyTitle: "Parcours",
-      elsewhere: "Ailleurs",
-      viewProject: "Ouvrir le site",
+      facts: [
+        { label: "Basé à", value: "Abidjan, Côte d’Ivoire" },
+        { label: "Spécialité", value: "Applications métier & APIs sécurisées" },
+        { label: "Stack principale", value: "Laravel, NestJS, Vue, Nuxt" },
+      ],
+      elsewhere: "Retrouvez-moi sur",
+      viewProject: "Voir le site",
       gitHubProjectSuffix: "sur GitHub",
-      colYear: "En service",
-      colSystem: "Système",
-      colDomain: "Domaine",
-      colStatus: "État",
       statusLive: "En ligne",
-      statusPrivate: "Interne client",
+      statusPrivate: "Projet client",
       statusBuilding: "En cours",
-      rowOpen: "Ouvrir la fiche",
-      rowClose: "Fermer la fiche",
+      showAllProjects: "Voir tous les projets",
+      showFewerProjects: "Voir moins",
+      copyEmail: "Copier l’email",
+      copied: "Copié",
+      marqueeLabel: "Technologies que j’utilise en production",
       railLabel: "Sections",
       languageToggle: "Langue",
     },
     stack: {
+      title: "Les outils que j’utilise en production",
       intro:
-        "Ce qui tourne réellement en production derrière les douze systèmes ci-dessus, serveur d’abord.",
+        "Ce qui tourne réellement derrière les projets ci-dessus, serveur d’abord.",
       panelBackend: "Serveur & données",
       panelFrontend: "Client & interface",
     },

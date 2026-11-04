@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 
 const LANGS: readonly Locale[] = ["en", "fr"] as const
 
-/** Two codes, the live one lit. No pill, no thumb, no chrome. */
+/** A two-option segmented control; the live language sits on the dark thumb. */
 export function LanguageToggle({ className }: { className?: string }) {
   const { locale, setLocale, site } = useLocaleContext()
 
@@ -14,29 +14,26 @@ export function LanguageToggle({ className }: { className?: string }) {
     <div
       role="group"
       aria-label={site.ui.languageToggle}
-      className={cn("flex shrink-0 items-center text-sm", className)}
+      className={cn(
+        "flex shrink-0 items-center rounded-full border border-line bg-panel/70 p-1 text-xs font-medium",
+        className
+      )}
     >
-      {LANGS.map((code, i) => (
-        <span key={code} className="flex items-center">
-          {i > 0 ? (
-            <span className="text-dim/50" aria-hidden>
-              /
-            </span>
-          ) : null}
-          <button
-            type="button"
-            lang={code}
-            aria-pressed={locale === code}
-            aria-label={code === "en" ? "English" : "Français"}
-            onClick={() => setLocale(code)}
-            className={cn(
-              "inline-flex size-11 items-center justify-center transition-colors",
-              locale === code ? "text-volt" : "text-dim hover:text-chalk"
-            )}
-          >
-            {code.toUpperCase()}
-          </button>
-        </span>
+      {LANGS.map((code) => (
+        <button
+          key={code}
+          type="button"
+          lang={code}
+          aria-pressed={locale === code}
+          aria-label={code === "en" ? "English" : "Français"}
+          onClick={() => setLocale(code)}
+          className={cn(
+            "inline-flex h-8 min-w-9 items-center justify-center rounded-full px-2.5 transition-colors",
+            locale === code ? "bg-ink text-white" : "text-soft hover:text-ink"
+          )}
+        >
+          {code.toUpperCase()}
+        </button>
       ))}
     </div>
   )

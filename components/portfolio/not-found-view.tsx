@@ -14,23 +14,37 @@ export function NotFoundView() {
     <>
       <SiteHeader activeHash="#home" />
 
-      <main className="sheet flex min-h-[72svh] flex-col justify-center py-20">
-        <p className="tnum font-heading text-6xl leading-none font-bold tracking-tighter text-volt sm:text-8xl">
-          404
-        </p>
-        <h1 className="section-title mt-6 max-w-3xl text-balance">
-          {copy.title}
-        </h1>
-        <p className="prose-col mt-6 text-base text-dim">{copy.description}</p>
+      <main className="relative isolate flex min-h-[72svh] flex-col items-center justify-center overflow-hidden py-20 text-center">
+        <div className="hero-grid absolute inset-0 -z-10" aria-hidden />
+        <div className="sheet flex flex-col items-center">
+          <p className="rounded-full border border-line bg-panel px-3 py-1 text-sm font-medium text-brand">
+            404 · {copy.kicker}
+          </p>
+          <h1 className="mt-6 max-w-2xl text-4xl font-semibold tracking-tight text-balance text-ink sm:text-5xl">
+            {copy.title}
+          </h1>
+          <p className="mt-4 max-w-lg text-base leading-relaxed text-soft">
+            {copy.description}
+          </p>
 
-        <div className="mt-10 flex flex-wrap items-center gap-x-10 gap-y-5">
-          <Link href="/" className="button-hot text-sm">
-            {copy.ctaHome}
-          </Link>
-          <Link href="/#work" className="link-quiet text-base">
-            {copy.ctaWork}
-          </Link>
-          <a href={site.contact.mailHref} className="link-quiet text-base">
+          <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row">
+            <Link
+              href="/"
+              className="inline-flex h-11 items-center rounded-full bg-ink px-6 text-sm font-medium text-white shadow-sm transition hover:bg-zinc-700"
+            >
+              {copy.ctaHome}
+            </Link>
+            <Link
+              href="/#work"
+              className="inline-flex h-11 items-center rounded-full border border-line bg-panel px-6 text-sm font-medium text-ink shadow-sm transition hover:bg-zinc-50"
+            >
+              {copy.ctaWork}
+            </Link>
+          </div>
+          <a
+            href={site.contact.mailHref}
+            className="mt-6 inline-flex h-11 items-center text-sm text-soft transition-colors hover:text-ink"
+          >
             {site.contact.email}
           </a>
         </div>

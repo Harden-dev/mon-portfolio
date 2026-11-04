@@ -45,48 +45,67 @@ export function useActiveSectionHash() {
 
 export function SiteHeader({ activeHash }: { activeHash: string }) {
   const site = useSiteCopy()
+  const [scrolled, setScrolled] = React.useState(false)
+
+  React.useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-void">
+    <header
+      className={cn(
+        "sticky top-0 z-50 border-b transition-colors duration-300",
+        scrolled
+          ? "border-line bg-paper/80 backdrop-blur-md"
+          : "border-transparent bg-paper/0"
+      )}
+    >
       <div className="sheet flex h-16 items-center justify-between gap-4">
         <Link
           href="/"
           title={site.name}
-          className="flex h-11 min-w-0 shrink items-center font-heading text-lg leading-none font-semibold tracking-tight whitespace-nowrap"
+          className="flex h-11 min-w-0 shrink items-center gap-2.5 text-base font-semibold tracking-tight whitespace-nowrap text-ink"
         >
-          {/* Full name wherever it fits, first name only when it cannot. */}
+          <span
+            className="flex size-8 items-center justify-center rounded-lg bg-ink text-sm font-semibold text-white"
+            aria-hidden
+          >
+            M
+          </span>
+          {/* Full name wherever it fits, the short name when it cannot. */}
           <span className="hidden lg:inline">{site.name}</span>
-          <span className="lg:hidden">{site.brand.prefix}</span>
-          <span className="text-volt">.</span>
+          <span className="lg:hidden">{site.shortName}</span>
         </Link>
 
-        <div className="flex min-w-0 items-center gap-5 sm:gap-8">
-          <nav
-            aria-label={site.ui.railLabel}
-            className="hidden items-center gap-6 md:flex"
-          >
-            {site.nav.map((item) => (
-              <a
-                key={item.href}
-                href={`/${item.href}`}
-                aria-current={activeHash === item.href ? "location" : undefined}
-                className={cn(
-                  "border-b pb-0.5 text-sm transition-colors",
-                  activeHash === item.href
-                    ? "border-volt text-chalk"
-                    : "border-transparent text-dim hover:text-chalk"
-                )}
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
+        <nav
+          aria-label={site.ui.railLabel}
+          className="hidden items-center gap-1 rounded-full border border-line bg-panel/70 p-1 shadow-sm backdrop-blur md:flex"
+        >
+          {site.nav.map((item) => (
+            <a
+              key={item.href}
+              href={`/${item.href}`}
+              aria-current={activeHash === item.href ? "location" : undefined}
+              className={cn(
+                "rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
+                activeHash === item.href
+                  ? "bg-ink text-white"
+                  : "text-soft hover:text-ink"
+              )}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
 
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
           <LanguageToggle />
-
           <a
             href={site.contact.mailHref}
-            className="button-hot h-11 text-sm whitespace-nowrap"
+            className="hidden h-10 items-center rounded-full bg-ink px-4 text-sm font-medium whitespace-nowrap text-white shadow-sm transition hover:bg-zinc-700 sm:inline-flex"
           >
             {site.contact.cta}
           </a>

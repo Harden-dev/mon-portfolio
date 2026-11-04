@@ -1,119 +1,89 @@
 "use client"
 
-import * as React from "react"
-
 import { useSiteCopy } from "@/components/locale-provider"
-import { DomainBoard } from "@/components/portfolio/domain-board"
+import { ContactSection } from "@/components/portfolio/contact-section"
 import { HeroSection } from "@/components/portfolio/hero-section"
 import { JourneyCard } from "@/components/portfolio/journey-card"
-import { ProjectRegister } from "@/components/portfolio/project-register"
+import { Reveal, SectionHead } from "@/components/portfolio/motion"
+import { ProjectGrid } from "@/components/portfolio/project-grid"
 import {
   SiteHeader,
   useActiveSectionHash,
 } from "@/components/portfolio/site-header"
 import { StackSection } from "@/components/portfolio/stack-section"
-
-function SectionHead({ title, note }: { title: string; note?: string }) {
-  return (
-    <div className="mb-10 flex flex-col gap-4">
-      <h2 className="section-title">{title}</h2>
-      {note ? (
-        <p className="prose-col text-base text-dim italic">{note}</p>
-      ) : null}
-    </div>
-  )
-}
+import { TechMarquee } from "@/components/portfolio/tech-marquee"
 
 export function HomeView() {
   const site = useSiteCopy()
   const activeHash = useActiveSectionHash()
-  const domains = React.useMemo(
-    () => site.projects.map((p) => p.domain),
-    [site.projects]
-  )
 
   return (
     <>
       <SiteHeader activeHash={activeHash} />
 
       <main>
-        <div className="sheet">
-          <HeroSection />
-        </div>
+        <HeroSection />
+        <TechMarquee />
 
-        <DomainBoard items={domains} />
-
-        <section id="work" className="scroll-mt-20 pt-20 pb-20 sm:pt-24">
-          <div className="sheet">
-            <SectionHead title={site.work.title} note={site.work.subtitle} />
-          </div>
-          {/* The board bleeds past the text column — it is the loud thing. */}
-          <ProjectRegister projects={site.projects} />
+        <section id="work" className="sheet scroll-mt-20 py-20 sm:py-28">
+          <SectionHead
+            eyebrow={site.ui.kickers.projects}
+            title={site.work.title}
+            note={site.work.subtitle}
+            className="mb-12"
+          />
+          <ProjectGrid projects={site.projects} />
         </section>
 
         <section
           id="about"
-          className="sheet scroll-mt-20 border-t border-line py-20 sm:py-24"
+          className="scroll-mt-20 border-y border-line bg-panel/60 py-20 sm:py-28"
         >
-          <SectionHead title={site.ui.kickers.about} />
-          <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
-            <p className="prose-col text-justify text-lg leading-[1.68] text-chalk/85">
-              {site.about.body}
-            </p>
-            <JourneyCard
-              heading={site.ui.journeyTitle}
-              entries={site.timeline}
-            />
+          <div className="sheet grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-16">
+            <div>
+              <SectionHead
+                eyebrow={site.ui.kickers.about}
+                title={site.about.title}
+              />
+              <Reveal delay={0.06}>
+                <p className="mt-6 text-base leading-relaxed text-pretty text-soft sm:text-lg">
+                  {site.about.body}
+                </p>
+                <dl className="mt-8 grid gap-4 border-t border-line pt-6 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+                  {site.ui.facts.map((fact) => (
+                    <div key={fact.label}>
+                      <dt className="text-xs font-medium tracking-wide text-faint uppercase">
+                        {fact.label}
+                      </dt>
+                      <dd className="mt-1 text-sm font-medium text-ink">
+                        {fact.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </Reveal>
+            </div>
+            <Reveal delay={0.1}>
+              <JourneyCard
+                heading={site.ui.journeyTitle}
+                entries={site.timeline}
+              />
+            </Reveal>
           </div>
         </section>
 
-        <section
-          id="stack"
-          className="sheet scroll-mt-20 border-t border-line py-20 sm:py-24"
-        >
-          <SectionHead title={site.ui.kickers.skills} />
+        <section id="stack" className="sheet scroll-mt-20 py-20 sm:py-28">
+          <SectionHead
+            eyebrow={site.ui.kickers.skills}
+            title={site.stack.title}
+            note={site.stack.intro}
+            className="mb-12"
+          />
           <StackSection />
         </section>
 
-        <section
-          id="contact"
-          className="sheet scroll-mt-20 border-t border-line py-20 sm:py-28"
-        >
-          <h2 className="section-title max-w-3xl text-balance">
-            {site.contact.headline}
-          </h2>
-          <p className="prose-col mt-6 text-base text-dim italic">
-            {site.contact.sub}
-          </p>
-
-          <div className="mt-10 flex flex-wrap items-center gap-x-10 gap-y-5">
-            <a href={site.contact.mailHref} className="button-hot text-base">
-              {site.contact.cta}
-            </a>
-            <a href={site.contact.mailHref} className="link-hot text-lg">
-              {site.contact.email}
-            </a>
-          </div>
-
-          <div className="mt-12 flex flex-wrap items-baseline gap-x-8 gap-y-3 border-t border-line pt-8">
-            <span className="text-sm text-dim">{site.ui.elsewhere}</span>
-            <a
-              href={site.social.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link-quiet text-sm"
-            >
-              LinkedIn
-            </a>
-            <a
-              href={site.social.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link-quiet text-sm"
-            >
-              GitHub
-            </a>
-          </div>
+        <section id="contact" className="sheet scroll-mt-20 pb-20 sm:pb-28">
+          <ContactSection />
         </section>
       </main>
     </>

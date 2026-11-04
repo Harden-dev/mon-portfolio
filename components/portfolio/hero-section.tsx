@@ -1,166 +1,108 @@
 "use client"
 
 import * as React from "react"
+import { motion, useReducedMotion } from "framer-motion"
+import { ArrowRight } from "lucide-react"
 
 import { useSiteCopy } from "@/components/locale-provider"
-import { EASE, gsap, prefersReducedMotion } from "@/lib/gsap"
-import { cn } from "@/lib/utils"
+import { EASE } from "@/components/portfolio/motion"
 
 /**
- * The page's opening sequence: the statement wipes up line by line, the rule
- * draws across, the figures count in. One timeline, once, on load.
+ * Opening block: badge, title, one line of context, two actions and three
+ * figures. They settle in once on load, a few tens of milliseconds apart.
  */
 export function HeroSection() {
   const site = useSiteCopy()
-  const scope = React.useRef<HTMLElement>(null)
+  const reduce = useReducedMotion()
+  const { before, highlight, after } = site.ui.heroTitle
 
-  React.useEffect(() => {
-    const root = scope.current
-    if (!root) return
-
-    const counters = root.querySelectorAll<HTMLElement>("[data-count]")
-
-    if (prefersReducedMotion()) {
-      counters.forEach((el) => {
-        el.textContent = el.dataset.count ?? ""
-      })
-      return
-    }
-
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: EASE } })
-
-      tl.fromTo(
-        "[data-hero='kicker']",
-        { autoAlpha: 0, x: -12 },
-        { autoAlpha: 1, x: 0, duration: 0.5 }
-      )
-        .fromTo(
-          "[data-hero='line'] > span",
-          { yPercent: 106 },
-          { yPercent: 0, duration: 0.95, stagger: 0.07 },
-          "-=0.2"
-        )
-        .fromTo(
-          "[data-hero='rule']",
-          { scaleX: 0 },
-          { scaleX: 1, duration: 0.8, transformOrigin: "left" },
-          "-=0.5"
-        )
-        .fromTo(
-          "[data-hero='settle']",
-          { autoAlpha: 0, y: 14 },
-          { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.07 },
-          "-=0.5"
-        )
-
-      /* Figures tick up to their real value — motion carrying the proof. */
-      counters.forEach((el) => {
-        const target = el.dataset.count ?? ""
-        const end = Number(target)
-        if (!Number.isFinite(end)) {
-          el.textContent = target
-          return
+  const item = (i: number) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 18, filter: "blur(8px)" },
+          animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+          transition: { duration: 0.7, ease: EASE, delay: 0.08 * i },
         }
-        const pad = target.length
-        const obj = { n: 0 }
-        tl.to(
-          obj,
-          {
-            n: end,
-            duration: 1.1,
-            ease: "power2.out",
-            onUpdate: () => {
-              el.textContent = String(Math.round(obj.n)).padStart(pad, "0")
-            },
-          },
-          "-=0.8"
-        )
-      })
-    }, root)
-
-    return () => ctx.revert()
-  }, [site.ui.heroLines, site.ui.stats])
 
   return (
     <section
-      ref={scope}
       id="home"
-      className="scroll-mt-20 pt-14 pb-12 sm:pt-20 sm:pb-16"
+      className="relative isolate scroll-mt-24 overflow-hidden pt-16 pb-16 sm:pt-24 sm:pb-20"
     >
-      {/* The name is read before the claim it is attached to. */}
-      <div data-hero="kicker" className="mb-7 flex flex-col gap-1.5 sm:mb-10">
-        <p className="flex items-center gap-3 font-heading text-2xl leading-none font-semibold tracking-tight sm:text-3xl">
-          <span
-            className="inline-block size-2.5 shrink-0 bg-volt"
-            aria-hidden
-          />
-          {site.name}
-        </p>
-        <p className="pl-[1.4rem] text-base text-chalk/80 sm:text-lg">
-          {site.ui.heroKicker}
-        </p>
-      </div>
-
-      <h1 className="statement">
-        {site.ui.heroLines.map((line, i) => (
-          <span key={line} data-hero="line" className="wipe-line">
-            <span
-              className={cn(i >= site.ui.heroAccentFrom && "statement-accent")}
-            >
-              {line}
-            </span>
-          </span>
-        ))}
-      </h1>
-
+      <div className="hero-grid absolute inset-0 -z-10" aria-hidden />
       <div
-        data-hero="rule"
-        className="mt-10 h-px w-full bg-line sm:mt-12"
+        className="brand-glow absolute -top-40 left-1/2 -z-10 h-[32rem] w-[48rem] -translate-x-1/2"
         aria-hidden
       />
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16">
-        <div className="flex flex-col gap-8">
-          <p
-            data-hero="settle"
-            className="prose-col text-base text-dim sm:text-lg"
-          >
-            {site.ui.heroNote}
-          </p>
+      <div className="sheet flex flex-col items-center text-center">
+        <motion.p
+          {...item(0)}
+          className="inline-flex items-center gap-2 rounded-full border border-line bg-panel/80 px-3.5 py-1.5 text-sm text-soft shadow-sm backdrop-blur"
+        >
+          <span className="relative flex size-2">
+            <span className="absolute inline-flex size-full animate-ping-soft rounded-full bg-live/60 motion-reduce:hidden" />
+            <span className="relative inline-flex size-2 rounded-full bg-live" />
+          </span>
+          {site.ui.heroBadge}
+        </motion.p>
 
-          <div
-            data-hero="settle"
-            className="flex flex-wrap items-center gap-x-8 gap-y-4"
-          >
-            <a href="#work" className="button-hot text-sm tracking-wide">
-              {site.ui.heroViewWork}
-            </a>
-            <a href={site.contact.mailHref} className="link-hot text-base">
-              {site.contact.email}
-            </a>
-          </div>
-        </div>
+        <motion.h1
+          {...item(1)}
+          className="mt-7 max-w-4xl text-4xl leading-[1.08] font-semibold tracking-tight text-balance text-ink sm:text-5xl lg:text-6xl"
+        >
+          {before}
+          <span className="bg-gradient-to-r from-brand to-amber-500 bg-clip-text text-transparent">
+            {highlight}
+          </span>
+          {after}
+        </motion.h1>
 
-        <dl
-          data-hero="settle"
-          className="grid grid-cols-3 gap-x-6 gap-y-2 border-t border-line pt-6 lg:border-t-0 lg:pt-0"
+        <motion.p
+          {...item(2)}
+          className="mt-6 max-w-2xl text-base leading-relaxed text-pretty text-soft sm:text-lg"
+        >
+          {site.ui.heroNote}
+        </motion.p>
+
+        <motion.div
+          {...item(3)}
+          className="mt-9 flex flex-col items-center gap-3 sm:flex-row"
+        >
+          <a
+            href="#work"
+            className="group inline-flex h-11 items-center gap-2 rounded-full bg-ink px-6 text-sm font-medium text-white shadow-sm transition hover:bg-zinc-700"
+          >
+            {site.ui.heroViewWork}
+            <ArrowRight
+              size={16}
+              className="transition-transform group-hover:translate-x-0.5"
+            />
+          </a>
+          <a
+            href="#contact"
+            className="inline-flex h-11 items-center rounded-full border border-line bg-panel px-6 text-sm font-medium text-ink shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50"
+          >
+            {site.ui.heroContact}
+          </a>
+        </motion.div>
+
+        <motion.dl
+          {...item(4)}
+          className="mt-14 grid w-full max-w-2xl grid-cols-3 divide-x divide-line rounded-2xl border border-line bg-panel/70 py-5 shadow-sm backdrop-blur"
         >
           {site.ui.stats.map((stat) => (
-            <div key={stat.label} className="flex flex-col gap-1">
-              <dt className="sr-only">{stat.label}</dt>
-              <dd
-                data-count={stat.value}
-                className="font-heading text-3xl leading-none font-semibold tracking-tight text-volt sm:text-5xl"
-              >
+            <div key={stat.label} className="flex flex-col-reverse gap-1 px-3">
+              <dt className="text-xs leading-snug text-soft sm:text-sm">
+                {stat.label}
+              </dt>
+              <dd className="text-2xl font-semibold tracking-tight text-ink tabular-nums sm:text-3xl">
                 {stat.value}
               </dd>
-              <p className="text-xs leading-snug text-dim sm:text-sm">
-                {stat.label}
-              </p>
             </div>
           ))}
-        </dl>
+        </motion.dl>
       </div>
     </section>
   )
