@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { motion, useReducedMotion } from "framer-motion"
+import { motion, useReducedMotion } from "motion/react"
 
 /** Every motion on the page shares this curve, so they read as one hand. */
 export const EASE = [0.22, 1, 0.36, 1] as const

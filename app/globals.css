@@ -137,3 +137,39 @@
     padding-inline: 2rem;
   }
 }
+
+/* ── Hero entrance ──────────────────────────────────────────────────────── */
+
+/* Pure CSS so it starts on first paint, with no wait for hydration. The
+   title (.hero-rise) only slides and stays fully opaque, so it is the
+   page's largest paint from the very first frame. */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    transform: translateY(14px);
+  }
+}
+
+.hero-in,
+.hero-rise {
+  animation: hero-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+.hero-rise {
+  animation-name: hero-rise;
+  animation-delay: 70ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-in,
+  .hero-rise {
+    animation: none;
+  }
+}
