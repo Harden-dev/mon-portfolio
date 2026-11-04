@@ -15,8 +15,8 @@ const geist = Geist({
 
 export const metadata: Metadata = {
   title: {
-    default: `${site.name} — ${site.role}`,
-    template: `%s — ${site.shortName}`,
+    default: `${site.name}, ${site.role}`,
+    template: `%s | ${site.shortName}`,
   },
   description: site.tagline,
   metadataBase: new URL(site.sourceSite),

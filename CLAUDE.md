@@ -17,6 +17,8 @@ Use pnpm — `.npmrc` sets `public-hoist-pattern[]=*@radix-ui/*` for shadcn unde
 
 There is no test suite.
 
+Production runs on a VPS (Node + PM2 + Nginx + Certbot); see `DEPLOY.md`, `ecosystem.config.cjs`, `deploy/nginx.conf.example` and `scripts/deploy.sh`.
+
 ## Architecture
 
 Next.js 16 App Router + React 19 + Tailwind v4 (CSS-first, no tailwind.config) single-page portfolio. Routes are thin: `app/page.tsx` and `app/not-found.tsx` each render one client component from `components/portfolio/`.
@@ -26,7 +28,7 @@ Next.js 16 App Router + React 19 + Tailwind v4 (CSS-first, no tailwind.config) s
 All site copy is data, not JSX literals. The pipeline is:
 
 - `lib/site-static.ts` — locale-independent facts (name, project ids, `year`, `live`, stacks, socials, contact email). `PROJECT_IDS` is the canonical project list, ordered newest first; `ProjectId` derives from it.
-- `lib/site-i18n.ts` — `en`/`fr` message bundles keyed by the same ids, plus `resolveSite(locale): ResolvedSite` merging static + localized into one flat object. `ResolvedSite.ui` and `.stack` hold every button label, aria-label, the hero title (`heroTitle.before/highlight/after`), the stat strip and the about facts; each project also carries a localized `domain` shown on its card — **never hardcode user-facing strings in a component**; add the field to `ResolvedSite`/`MessageBundle` and fill it in both `en` and `fr`.
+- `lib/site-i18n.ts` — `en`/`fr` message bundles keyed by the same ids, plus `resolveSite(locale): ResolvedSite` merging static + localized into one flat object. `ResolvedSite.ui` and `.stack` hold every button label, aria-label, the hero title (`heroTitle.before/highlight/after`), the stat strip and the about facts; each project also carries a localized `domain` shown on its card — **never hardcode user-facing strings in a component**; write copy in plain, first-person sentences, with no em/en dashes or " - " used as punctuation (use a comma, colon or a new sentence); add the field to `ResolvedSite`/`MessageBundle` and fill it in both `en` and `fr`.
 - `lib/site-data.ts` — the import barrel, plus `site = resolveSite("en")` for server-only use (`metadata` in `app/layout.tsx`).
 - `components/locale-provider.tsx` — client context; persists to `localStorage` (`LOCALE_STORAGE_KEY`), syncs `documentElement.lang`. Components read copy via `useSiteCopy()`.
 

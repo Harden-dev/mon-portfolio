@@ -33,9 +33,7 @@ export function HeroSection() {
     >
       <motion.p {...item(0)} className="text-sm text-soft sm:text-base">
         <span className="font-medium text-ink">{site.name}</span>
-        <span className="mx-2 text-faint" aria-hidden>
-          —
-        </span>
+        {", "}
         {site.ui.heroKicker}
       </motion.p>
 

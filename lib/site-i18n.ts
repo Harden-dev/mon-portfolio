@@ -171,7 +171,7 @@ const projectsEn: ProjectCopy = {
       "Marketplace connecting domestic workers with employers: a profile and application flow on both sides, plus an admin role that moderates listings and accounts before they reach anyone.",
   },
   mda: {
-    title: "MDA - Shareholder portal",
+    title: "MDA shareholder portal",
     domain: "Shareholding",
     description:
       "Full-stack shareholder portal: purchases, transaction history, portfolio views, and hardened access to holdings data.",
@@ -252,7 +252,7 @@ const projectsFr: ProjectCopy = {
       "Place de marché entre travailleurs domestiques et employeurs : profils et candidatures des deux côtés, plus un rôle admin qui modère les annonces et les comptes avant qu’ils n’atteignent qui que ce soit.",
   },
   mda: {
-    title: "MDA - Portail actionnaires",
+    title: "Portail actionnaires MDA",
     domain: "Actionnariat",
     description:
       "Portail actionnaires full-stack : achats, historique des transactions, vues portefeuille et accès renforcé aux données de détention.",
@@ -284,25 +284,25 @@ const messages: Record<Locale, MessageBundle> = {
     tagline:
       "Twelve production systems: utility connection requests, property subscriptions, AI CV screening, mobile-money point-of-sale tracking, security operations, domestic-work matching, shareholder records and print orders. Laravel and NestJS on the server, Vue and Nuxt in front.",
     about: {
-      title: "Software a business actually runs on",
-      body: "I build the software a business actually runs on - the part that holds the records, decides who may see them, and still works on a Monday morning. Schema and secure APIs first, then the admin tools the staff live in, then the app the customer sees. Recent work is concentrated in Côte d’Ivoire: agent and shift management for a security firm, and a marketplace putting domestic workers in front of employers with moderation in between.",
+      title: "A bit about me",
+      body: "I’m a full-stack web developer based in Abidjan. Most of my work is business software: the tools a company uses every day to manage its customers, requests, staff and payments. I usually start with the database and the API, then build the back office, then the screens the customers see. Lately I’ve worked on shift planning for a security company and on a platform that connects domestic workers with employers.",
     },
     timeline: [
       {
         range: "2026",
-        title: "Utility operations",
+        title: "Water and power utilities",
         detail:
-          "KYPAYE in progress (rent payments, SAAR Assurance API), plus PSOFO, SODECI connection digitisation and CIE HV connections — internal tools for connection requests and property subscriptions.",
+          "Internal tools for SODECI, CIE and GS2E: water and power connection requests, and a property subscription portal. KYPAYE, a rent payment app, is in progress.",
       },
       {
         range: "2025",
-        title: "Platforms with real operators",
+        title: "Platforms used every day",
         detail:
-          "Alpha Sécurité, Stediihome and Merchant Tracker - agent scheduling, marketplace moderation and MTN MoMo point-of-sale tracking, built for staff who open them every day.",
+          "Alpha Sécurité for agent scheduling, Stediihome for hiring domestic workers, and Merchant Tracker for MTN MoMo points of sale.",
       },
       {
         range: "2024",
-        title: "Records, requests and AI",
+        title: "Portals and internal tools",
         detail:
           "Shareholder portal and print-order pipeline, OMILAYE for connection requests in Benin, and TRI CV, AI CV screening with a built-in chatbot.",
       },
@@ -323,23 +323,23 @@ const messages: Record<Locale, MessageBundle> = {
     work: {
       title: "Selected projects",
       subtitle:
-        "Business applications built for real companies in Côte d’Ivoire and Benin — from utility connection requests to shareholder portals.",
+        "Applications I built for companies in Côte d’Ivoire and Benin. Most are internal tools, so they have no public link.",
     },
     projects: projectsEn,
     contact: {
-      headline: "Have a project in mind, or a role to fill?",
-      sub: "Tell me the problem and who will use it. I’ll get back to you with a clear scope.",
+      headline: "Let’s work together",
+      sub: "You have a project or a job opening? Send me a short message about what you need and I’ll get back to you.",
       cta: "Email me",
     },
     ui: {
-      heroKicker: "Full-stack web developer in Abidjan",
+      heroKicker: "full-stack web developer in Abidjan",
       heroTitle: {
         before: "I build web apps ",
         highlight: "businesses run on",
         after: ".",
       },
       heroNote:
-        "Laravel and NestJS on the server, Vue and Nuxt in front — from the database schema to the screens teams use all day.",
+        "I work with Laravel and NestJS on the back end, Vue and Nuxt on the front end. I handle the whole project, from the database to the interface.",
       stats: [
         { value: "12", label: "projects in production" },
         { value: "4", label: "publicly online" },
@@ -374,30 +374,30 @@ const messages: Record<Locale, MessageBundle> = {
       languageToggle: "Language",
     },
     approach: {
-      title: "From the database to the screen, in that order.",
+      title: "How I work on a project",
       intro:
-        "Three layers, built one on top of the other, so what the customer sees rests on records that hold.",
+        "I build in three steps, starting with the data, so the rest of the app has solid ground to stand on.",
       steps: [
         {
           title: "Data & secure APIs",
-          body: "The schema comes first: what is stored, who owns it, who may read or change it.",
+          body: "I start by modelling the data and deciding who can see or change what.",
           points: ["Database design", "REST APIs", "Role-based access"],
         },
         {
           title: "Admin tools",
-          body: "The back office the staff live in every day: records, requests, planning, moderation.",
+          body: "Then the back office your team uses every day to handle records, requests and planning.",
           points: ["Dashboards", "Workflows", "Notifications"],
         },
         {
           title: "Customer-facing apps",
-          body: "Then the part people outside the company use — fast, clear and tied to the same data.",
+          body: "Last, the app your customers use. It runs on the same data, so everything stays in sync.",
           points: ["Vue & Nuxt front ends", "Payments", "Deployment"],
         },
       ],
     },
     stack: {
-      title: "Tools I use in production",
-      intro: "What actually runs behind the projects above, server first.",
+      title: "My tools",
+      intro: "The languages and frameworks I use on the projects above.",
       panelBackend: "Server & data",
       panelFrontend: "Client & interface",
     },
@@ -408,25 +408,25 @@ const messages: Record<Locale, MessageBundle> = {
     tagline:
       "Douze systèmes en production : demandes de branchement et de raccordement, souscription immobilière, tri de CV par IA, suivi de points de vente mobile money, opérations de sécurité, mise en relation domestique, registres d’actionnaires et commandes d’impression. Laravel et NestJS côté serveur, Vue et Nuxt côté interface.",
     about: {
-      title: "Le logiciel sur lequel une entreprise tourne",
-      body: "Je construis le logiciel sur lequel une entreprise tourne vraiment - celui qui garde les dossiers, décide qui a le droit de les voir, et fonctionne encore le lundi matin. Le schéma et des APIs sécurisées d’abord, puis les outils d’administration dans lesquels les équipes passent leurs journées, puis l’application que le client voit. Mes travaux récents sont concentrés en Côte d’Ivoire : la gestion des agents et des vacations d’une société de sécurité, et une place de marché qui met des travailleurs domestiques en face d’employeurs, avec de la modération entre les deux.",
+      title: "Qui je suis",
+      body: "Je suis développeur web full-stack, basé à Abidjan. Je développe surtout des applications métier : les outils qu’une entreprise utilise au quotidien pour gérer ses clients, ses demandes, ses équipes et ses paiements. Je commence en général par la base de données et l’API, puis le back-office, puis les écrans que voient les clients. Récemment, j’ai travaillé sur la planification des agents d’une société de sécurité et sur une plateforme qui met en relation des employés de maison et des employeurs.",
     },
     timeline: [
       {
         range: "2026",
-        title: "Métiers de l’eau et de l’électricité",
+        title: "Eau et électricité",
         detail:
-          "KYPAYE en cours (paiement de loyer, API SAAR Assurance), ainsi que PSOFO, digitalisation des branchements SODECI et raccordement HT CIE — outils internes de demandes de branchement et de souscription immobilière.",
+          "Des outils internes pour la SODECI, la CIE et GS2E : demandes de branchement d’eau et d’électricité, et un portail de souscription immobilière. KYPAYE, une application de paiement de loyer, est en cours.",
       },
       {
         range: "2025",
-        title: "Des plateformes avec de vrais opérateurs",
+        title: "Des plateformes utilisées chaque jour",
         detail:
-          "Alpha Sécurité, Stediihome et Merchant Tracker - planification des agents, modération de la mise en relation et suivi des points de vente MTN MoMo, conçus pour ceux qui les ouvrent tous les jours.",
+          "Alpha Sécurité pour la planification des agents, Stediihome pour le recrutement d’employés de maison, et Merchant Tracker pour les points de vente MTN MoMo.",
       },
       {
         range: "2024",
-        title: "Dossiers, demandes et IA",
+        title: "Portails et outils internes",
         detail:
           "Portail actionnaires et chaîne de commande d’impression, OMILAYE pour les demandes de branchement au Bénin, et TRI CV, tri de CV par IA avec chatbot intégré.",
       },
@@ -447,23 +447,23 @@ const messages: Record<Locale, MessageBundle> = {
     work: {
       title: "Projets sélectionnés",
       subtitle:
-        "Des applications métier conçues pour de vraies entreprises en Côte d’Ivoire et au Bénin — des demandes de branchement aux portails actionnaires.",
+        "Des applications que j’ai développées pour des entreprises en Côte d’Ivoire et au Bénin. La plupart sont des outils internes, donc sans lien public.",
     },
     projects: projectsFr,
     contact: {
-      headline: "Un projet en tête, ou un poste à pourvoir ?",
-      sub: "Décrivez-moi le besoin et qui va l’utiliser. Je reviens vers vous avec un périmètre clair.",
+      headline: "Travaillons ensemble",
+      sub: "Vous avez un projet ou un poste à pourvoir ? Écrivez-moi quelques lignes sur votre besoin, je vous réponds rapidement.",
       cta: "M’écrire",
     },
     ui: {
-      heroKicker: "Développeur web full-stack à Abidjan",
+      heroKicker: "développeur web full-stack à Abidjan",
       heroTitle: {
         before: "Je développe des applications web ",
         highlight: "qui font tourner les entreprises",
         after: ".",
       },
       heroNote:
-        "Laravel et NestJS côté serveur, Vue et Nuxt côté interface — du schéma de base de données jusqu’aux écrans que les équipes utilisent toute la journée.",
+        "Je travaille avec Laravel et NestJS côté serveur, Vue et Nuxt côté interface. Je prends en charge tout le projet, de la base de données jusqu’à l’interface.",
       stats: [
         { value: "12", label: "projets en production" },
         { value: "4", label: "en ligne publiquement" },
@@ -498,13 +498,13 @@ const messages: Record<Locale, MessageBundle> = {
       languageToggle: "Langue",
     },
     approach: {
-      title: "De la base de données à l’écran, dans cet ordre.",
+      title: "Ma façon de travailler",
       intro:
-        "Trois couches construites l’une sur l’autre, pour que ce que voit le client repose sur des données solides.",
+        "Je construis en trois étapes, en commençant par les données, pour que le reste de l’application repose sur une base solide.",
       steps: [
         {
           title: "Données & APIs sécurisées",
-          body: "Le schéma d’abord : ce qui est stocké, à qui ça appartient, qui peut le lire ou le modifier.",
+          body: "Je commence par organiser les données et définir qui peut voir ou modifier quoi.",
           points: [
             "Conception de base de données",
             "APIs REST",
@@ -513,20 +513,20 @@ const messages: Record<Locale, MessageBundle> = {
         },
         {
           title: "Outils d’administration",
-          body: "Le back-office dans lequel les équipes passent leurs journées : dossiers, demandes, planning, modération.",
+          body: "Ensuite le back-office que votre équipe utilise chaque jour pour gérer les dossiers, les demandes et le planning.",
           points: ["Tableaux de bord", "Workflows", "Notifications"],
         },
         {
           title: "Applications client",
-          body: "Puis la partie utilisée hors de l’entreprise — rapide, claire et branchée sur les mêmes données.",
+          body: "Enfin l’application de vos clients. Elle utilise les mêmes données, donc tout reste à jour.",
           points: ["Interfaces Vue & Nuxt", "Paiements", "Mise en production"],
         },
       ],
     },
     stack: {
-      title: "Les outils que j’utilise en production",
+      title: "Mes outils",
       intro:
-        "Ce qui tourne réellement derrière les projets ci-dessus, serveur d’abord.",
+        "Les langages et frameworks que j’utilise sur les projets ci-dessus.",
       panelBackend: "Serveur & données",
       panelFrontend: "Client & interface",
     },
