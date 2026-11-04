@@ -1,4 +1,7 @@
-import { Geist } from "next/font/google"
+import {
+  Atkinson_Hyperlegible_Next,
+  Bricolage_Grotesque,
+} from "next/font/google"
 import type { Metadata } from "next"
 
 import "./globals.css"
@@ -7,10 +10,16 @@ import { SiteFooter } from "@/components/portfolio/site-footer"
 import { cn } from "@/lib/utils"
 import { site } from "@/lib/site-data"
 
-/** One family for the whole page; hierarchy comes from size and weight. */
-const geist = Geist({
+/** Bricolage Grotesque for titles and figures, Atkinson Hyperlegible Next
+ *  for everything you read. */
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: "--font-geist",
+  variable: "--font-bricolage",
+})
+
+const atkinson = Atkinson_Hyperlegible_Next({
+  subsets: ["latin"],
+  variable: "--font-atkinson",
 })
 
 export const metadata: Metadata = {
@@ -31,7 +40,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn(geist.variable, "font-sans")}
+      className={cn(bricolage.variable, atkinson.variable, "font-sans")}
     >
       <head>
         {/* Scroll reveals start hidden in the server HTML and are shown by

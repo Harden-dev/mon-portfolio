@@ -25,7 +25,7 @@ export function JourneyCard({
               {row.range}
             </span>
             <p className="mt-1 text-base font-medium text-ink">{row.title}</p>
-            <p className="mt-1.5 text-sm leading-relaxed text-soft">
+            <p className="mt-1.5 text-justify text-sm leading-relaxed hyphens-auto text-soft">
               {row.detail}
             </p>
           </li>

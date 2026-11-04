@@ -13,9 +13,9 @@
  */
 
 @theme inline {
-  --font-sans: var(--font-geist);
-  --font-heading: var(--font-geist);
-  --font-display: var(--font-geist);
+  --font-sans: var(--font-atkinson);
+  --font-heading: var(--font-bricolage);
+  --font-display: var(--font-bricolage);
 
   --color-ink: var(--ink);
   --color-soft: var(--soft);
@@ -104,6 +104,13 @@
     color: var(--ink);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+
+  /* Titles and big figures speak in Bricolage Grotesque. */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
   }
 
   ::selection {

@@ -78,7 +78,7 @@ export function HeroSection() {
                 <dt className="text-xs leading-snug text-soft sm:text-sm">
                   {stat.label}
                 </dt>
-                <dd className="text-3xl font-semibold tracking-tight text-ink tabular-nums sm:text-5xl">
+                <dd className="font-heading text-3xl font-semibold tracking-tight text-ink tabular-nums sm:text-5xl">
                   {stat.value}
                 </dd>
               </div>

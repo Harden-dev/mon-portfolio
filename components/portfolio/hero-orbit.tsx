@@ -188,7 +188,7 @@ export function HeroOrbit() {
         />
 
         <motion.div
-          className="absolute top-1/2 left-1/2 flex size-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-ink text-3xl font-semibold text-white shadow-[0_20px_50px_-15px_rgb(24_24_27/0.5)]"
+          className="absolute top-1/2 left-1/2 flex size-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-ink font-heading text-3xl font-semibold text-white shadow-[0_20px_50px_-15px_rgb(24_24_27/0.5)]"
           initial={reduce ? false : { opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, ease: EASE }}
