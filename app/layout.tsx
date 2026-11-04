@@ -1,4 +1,4 @@
-import { DM_Sans, Space_Grotesk } from "next/font/google"
+import { Geist } from "next/font/google"
 import type { Metadata } from "next"
 
 import "./globals.css"
@@ -7,23 +7,16 @@ import { SiteFooter } from "@/components/portfolio/site-footer"
 import { cn } from "@/lib/utils"
 import { site } from "@/lib/site-data"
 
-/** Space Grotesk shouts, DM Sans explains. Nothing else gets a voice. */
-const spaceGrotesk = Space_Grotesk({
+/** One family for the whole page; hierarchy comes from size and weight. */
+const geist = Geist({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-space-grotesk",
-})
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  variable: "--font-dm-sans",
+  variable: "--font-geist",
 })
 
 export const metadata: Metadata = {
   title: {
-    default: `${site.name} — ${site.role}`,
-    template: `%s — ${site.shortName}`,
+    default: `${site.name}, ${site.role}`,
+    template: `%s | ${site.shortName}`,
   },
   description: site.tagline,
   metadataBase: new URL(site.sourceSite),
@@ -38,9 +31,9 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn(spaceGrotesk.variable, dmSans.variable, "font-sans")}
+      className={cn(geist.variable, "font-sans")}
     >
-      <body className="relative min-h-svh overflow-x-clip bg-void text-chalk">
+      <body className="relative min-h-svh overflow-x-clip bg-paper text-ink">
         <LocaleProvider>
           <div className="relative flex min-h-svh flex-col">
             <div className="flex flex-1 flex-col">{children}</div>
