@@ -52,27 +52,27 @@ function StatusPill({ status }: { status: Status }) {
   )
 }
 
-function ProjectCard({ project }: { project: ResolvedProject }) {
+function ProjectCard({
+  project,
+  index,
+}: {
+  project: ResolvedProject
+  index: number
+}) {
   const site = useSiteCopy()
 
-  /* Feed the pointer position to the CSS spotlight. */
-  const onMove = (e: React.MouseEvent<HTMLElement>) => {
-    const r = e.currentTarget.getBoundingClientRect()
-    e.currentTarget.style.setProperty("--x", `${e.clientX - r.left}px`)
-    e.currentTarget.style.setProperty("--y", `${e.clientY - r.top}px`)
-  }
-
   return (
-    <article
-      onMouseMove={onMove}
-      className="spotlight group flex h-full flex-col rounded-2xl border border-line bg-panel p-6 transition duration-300 hover:-translate-y-1 hover:border-zinc-300 hover:shadow-[0_12px_32px_-16px_rgb(24_24_27/0.18)] motion-reduce:hover:translate-y-0"
-    >
-      <div className="flex items-center justify-between gap-3">
-        <span className="truncate text-xs font-medium tracking-wide text-brand uppercase">
-          {project.domain}
+    <article className="group flex h-full flex-col rounded-2xl border border-line bg-panel p-6 transition duration-300 hover:-translate-y-0.5 hover:border-zinc-300 motion-reduce:hover:translate-y-0">
+      <div className="flex items-baseline justify-between gap-3">
+        <span className="text-sm font-medium text-brand tabular-nums">
+          {String(index + 1).padStart(2, "0")}
         </span>
-        <span className="shrink-0 text-xs text-faint tabular-nums">
-          {project.year}
+        <span className="truncate text-xs text-soft">
+          {project.domain}
+          <span className="mx-1.5 text-faint" aria-hidden>
+            ·
+          </span>
+          <span className="tabular-nums">{project.year}</span>
         </span>
       </div>
 
@@ -151,7 +151,7 @@ export function ProjectGrid({
         {first.map((project, i) => (
           <li key={project.id}>
             <Reveal className="h-full" delay={(i % 3) * 0.06}>
-              <ProjectCard project={project} />
+              <ProjectCard project={project} index={i} />
             </Reveal>
           </li>
         ))}
@@ -165,7 +165,7 @@ export function ProjectGrid({
                   exit={reduce ? undefined : { opacity: 0, y: 8 }}
                   transition={{ duration: 0.45, ease: EASE, delay: i * 0.04 }}
                 >
-                  <ProjectCard project={project} />
+                  <ProjectCard project={project} index={INITIAL_COUNT + i} />
                 </motion.li>
               ))
             : null}
@@ -178,7 +178,7 @@ export function ProjectGrid({
             type="button"
             onClick={() => setExpanded((v) => !v)}
             aria-expanded={expanded}
-            className="inline-flex h-11 items-center gap-2 rounded-full border border-line bg-panel px-5 text-sm font-medium text-ink shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50"
+            className="inline-flex h-11 items-center gap-2 rounded-full border border-line bg-panel px-5 text-sm font-medium text-ink transition hover:border-zinc-300 hover:bg-zinc-50"
           >
             {expanded
               ? site.ui.showFewerProjects

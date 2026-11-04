@@ -14,12 +14,9 @@ export function NotFoundView() {
     <>
       <SiteHeader activeHash="#home" />
 
-      <main className="relative isolate flex min-h-[72svh] flex-col items-center justify-center overflow-hidden py-20 text-center">
-        <div className="hero-grid absolute inset-0 -z-10" aria-hidden />
-        <div className="sheet flex flex-col items-center">
-          <p className="rounded-full border border-line bg-panel px-3 py-1 text-sm font-medium text-brand">
-            404 · {copy.kicker}
-          </p>
+      <main className="flex min-h-[72svh] flex-col justify-center py-20">
+        <div className="sheet flex flex-col items-start">
+          <p className="text-sm font-medium text-brand">404 · {copy.kicker}</p>
           <h1 className="mt-6 max-w-2xl text-4xl font-semibold tracking-tight text-balance text-ink sm:text-5xl">
             {copy.title}
           </h1>
@@ -27,7 +24,7 @@ export function NotFoundView() {
             {copy.description}
           </p>
 
-          <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row">
+          <div className="mt-9 flex flex-col items-start gap-3 sm:flex-row">
             <Link
               href="/"
               className="inline-flex h-11 items-center rounded-full bg-ink px-6 text-sm font-medium text-white shadow-sm transition hover:bg-zinc-700"

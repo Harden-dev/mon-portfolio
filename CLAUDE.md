@@ -32,30 +32,21 @@ All site copy is data, not JSX literals. The pipeline is:
 
 Because locale lives in client state rather than the URL, every component that renders copy is `"use client"`. `lib/not-found-i18n.ts` is a separate bundle for the 404.
 
-### Design: light studio
+### Design: light editorial
 
-A light, quiet, professional page in the style of modern component galleries (21st.dev / shadcn): near-white ground, zinc ink, hairline borders, rounded cards, generous whitespace. The rules that keep it coherent:
+A light, professional page set like an editorial layout: light grey ground (`paper` #f4f4f5), white cards and bands (`panel`), zinc ink, hairline borders, left-aligned headings. **No decorative effects that read as generated-UI**: no background grids or dot patterns, no glows, no gradient text, no blur-in, no pointer spotlights, no pills/badges above the hero, no logo marquees. Keep it that way.
 
-- **Palette** lives in `:root` in `app/globals.css` and is mapped through `@theme inline`: `paper` (page ground), `panel` (cards), `ink` / `soft` / `faint` (text levels), `line` (borders), `brand` (#ea580c) + `brand-soft`, and `live` (green). Primary buttons are `bg-ink` pills, secondary are bordered white pills.
-- **One accent.** `brand` marks section eyebrows, the highlighted hero phrase, project domains and the "In progress" pill — never large filled areas. `live` (green) means "online" and nothing else. Do not add a third colour.
-- **Cards, not rows.** Projects are a 1/2/3-column grid of rounded cards (`project-grid.tsx`): domain + year, title, description, stack chips, status pill. The first 6 show; "Show all" reveals the rest. A CSS spotlight (`.spotlight`, fed `--x`/`--y` on mouse move) and a 4px lift answer hover.
-- **One family.** Geist (`--font-geist`, mapped to `font-sans`/`font-heading`/`font-display`). Hierarchy comes from size and weight (`font-semibold tracking-tight` for headings). No italics, no monospace; figures use `tabular-nums`.
-- `app/globals.css` semantic classes: `.sheet` (72rem column), `.hero-grid` (faint masked grid behind hero/contact/404), `.brand-glow`, `.spotlight`, `.marquee-mask`. They are unlayered, so they beat Tailwind utilities on the same element.
-- Section headings go through `SectionHead` (`components/portfolio/motion.tsx`): brand eyebrow + title + optional note.
+- **Palette** in `:root` of `app/globals.css`, mapped via `@theme inline`: `paper`, `panel`, `ink` / `soft` / `faint`, `line`, `brand` (#ea580c) + `brand-soft`, `live` (green). Primary buttons are `bg-ink` pills, secondary are white pills with a `zinc-300` border.
+- **One accent.** `brand` is used for the hero underline, section eyebrows and the `01`, `02`… numbers — never large filled areas. `live` means "online" and nothing else.
+- **Numbered, editorial structure.** Hero: plain "name — role" line, large left-aligned title with the highlighted phrase underlined in brand, note + actions, stats on a rule. Projects are numbered cards (`project-grid.tsx`: number, domain · year meta line, title, description, stack chips, status), first 6 shown then "Show all". The approach section (`approach-section.tsx`) is three numbered columns separated by rules.
+- **One family.** Geist (`--font-geist`). Hierarchy from size and weight; figures use `tabular-nums`.
+- Section headings go through `SectionHead` (`components/portfolio/motion.tsx`).
 - Nav hrefs in the bundles are bare hashes (`#work`); header and footer render them as `/#work` so they still work from the 404.
 - Only a light theme is implemented.
 
 ### Motion — framer-motion, light and short
 
-`components/portfolio/motion.tsx` exports `EASE` and `Reveal` (fade + 16px rise + blur, once, when scrolled into view). Every motion uses `useReducedMotion()` and falls back to the end state. The motions are:
-
-1. **Hero load** (`hero-section.tsx`) — badge, title, note, buttons and stat strip settle in with a small stagger.
-2. **Reveal on scroll** — section heads, project cards, about, stack panels and contact card, via `Reveal`.
-3. **Tech marquee** (`tech-marquee.tsx`) — a slow CSS `animate-marquee` strip of the stack; pauses on hover, stops under reduced motion. The only looping motion.
-4. **Hover feedback** — card lift + spotlight, chip tint, arrow nudge. CSS transitions only.
-5. **Show all projects** — extra cards animate in/out with `AnimatePresence`.
-
-Keep durations ≤ 0.7s and distances small; no parallax, no scroll-jacking.
+`components/portfolio/motion.tsx` exports `EASE` and `Reveal` (fade + 14px rise, once, on scroll into view). Every motion uses `useReducedMotion()` and falls back to the end state. The motions are: hero settle-in on load, `Reveal` on sections and cards, CSS hover transitions (small card lift, arrow nudge, chip tint), and the "Show all projects" cards animating in via `AnimatePresence`. Nothing loops. Keep durations ≤ 0.6s and distances small.
 
 ### Tech icons
 

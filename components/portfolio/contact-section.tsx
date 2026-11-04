@@ -27,30 +27,21 @@ export function ContactSection() {
 
   return (
     <Reveal>
-      <div className="relative isolate overflow-hidden rounded-3xl border border-line bg-panel px-6 py-14 text-center sm:px-12 sm:py-20">
-        <div
-          className="hero-grid absolute inset-0 -z-10 opacity-70"
-          aria-hidden
-        />
-        <div
-          className="brand-glow absolute -bottom-40 left-1/2 -z-10 h-[28rem] w-[40rem] -translate-x-1/2"
-          aria-hidden
-        />
-
+      <div className="rounded-3xl border border-line bg-panel px-6 py-12 sm:px-12 sm:py-16">
         <p className="text-sm font-medium text-brand">
           {site.ui.kickers.contact}
         </p>
-        <h2 className="mx-auto mt-2 max-w-2xl text-3xl font-semibold tracking-tight text-balance text-ink sm:text-4xl">
+        <h2 className="mt-3 max-w-3xl text-3xl font-semibold tracking-tight text-balance text-ink sm:text-5xl">
           {site.contact.headline}
         </h2>
-        <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-soft">
+        <p className="mt-5 max-w-xl text-base leading-relaxed text-soft sm:text-lg">
           {site.contact.sub}
         </p>
 
-        <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <div className="mt-9 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
           <a
             href={site.contact.mailHref}
-            className="inline-flex h-11 items-center gap-2 rounded-full bg-ink px-6 text-sm font-medium text-white shadow-sm transition hover:bg-zinc-700"
+            className="inline-flex h-11 items-center gap-2 rounded-full bg-ink px-6 text-sm font-medium text-white transition hover:bg-zinc-700"
           >
             <Mail size={16} />
             {site.contact.cta}
@@ -58,7 +49,7 @@ export function ContactSection() {
           <button
             type="button"
             onClick={copy}
-            className="inline-flex h-11 items-center gap-2 rounded-full border border-line bg-panel px-5 text-sm font-medium text-ink shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50"
+            className="inline-flex h-11 items-center gap-2 rounded-full border border-line bg-panel px-5 text-sm font-medium text-ink transition hover:border-zinc-300 hover:bg-zinc-50"
           >
             {copied ? (
               <Check size={16} className="text-live" />
@@ -72,7 +63,7 @@ export function ContactSection() {
           </button>
         </div>
 
-        <div className="mt-10 flex items-center justify-center gap-6 text-sm">
+        <div className="mt-10 flex flex-wrap items-center gap-x-6 border-t border-line pt-6 text-sm">
           <span className="text-faint">{site.ui.elsewhere}</span>
           {[
             { label: "LinkedIn", href: site.social.linkedin },

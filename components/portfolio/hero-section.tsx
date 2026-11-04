@@ -8,8 +8,9 @@ import { useSiteCopy } from "@/components/locale-provider"
 import { EASE } from "@/components/portfolio/motion"
 
 /**
- * Opening block: badge, title, one line of context, two actions and three
- * figures. They settle in once on load, a few tens of milliseconds apart.
+ * Opening block, set like a page in a magazine: name and role on one plain
+ * line, a large left-aligned title, one line of context, two actions and
+ * three figures on a rule. They settle in once on load.
  */
 export function HeroSection() {
   const site = useSiteCopy()
@@ -20,59 +21,46 @@ export function HeroSection() {
     reduce
       ? {}
       : {
-          initial: { opacity: 0, y: 18, filter: "blur(8px)" },
-          animate: { opacity: 1, y: 0, filter: "blur(0px)" },
-          transition: { duration: 0.7, ease: EASE, delay: 0.08 * i },
+          initial: { opacity: 0, y: 14 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, ease: EASE, delay: 0.07 * i },
         }
 
   return (
     <section
       id="home"
-      className="relative isolate scroll-mt-24 overflow-hidden pt-16 pb-16 sm:pt-24 sm:pb-20"
+      className="sheet scroll-mt-24 pt-16 pb-16 sm:pt-28 sm:pb-24"
     >
-      <div className="hero-grid absolute inset-0 -z-10" aria-hidden />
-      <div
-        className="brand-glow absolute -top-40 left-1/2 -z-10 h-[32rem] w-[48rem] -translate-x-1/2"
-        aria-hidden
-      />
+      <motion.p {...item(0)} className="text-sm text-soft sm:text-base">
+        <span className="font-medium text-ink">{site.name}</span>
+        <span className="mx-2 text-faint" aria-hidden>
+          —
+        </span>
+        {site.ui.heroKicker}
+      </motion.p>
 
-      <div className="sheet flex flex-col items-center text-center">
-        <motion.p
-          {...item(0)}
-          className="inline-flex items-center gap-2 rounded-full border border-line bg-panel/80 px-3.5 py-1.5 text-sm text-soft shadow-sm backdrop-blur"
-        >
-          <span className="relative flex size-2">
-            <span className="absolute inline-flex size-full animate-ping-soft rounded-full bg-live/60 motion-reduce:hidden" />
-            <span className="relative inline-flex size-2 rounded-full bg-live" />
-          </span>
-          {site.ui.heroBadge}
-        </motion.p>
+      <motion.h1
+        {...item(1)}
+        className="mt-6 max-w-5xl text-[2.6rem] leading-[1.05] font-semibold tracking-tight text-balance text-ink sm:text-6xl lg:text-7xl"
+      >
+        {before}
+        <span className="underline decoration-brand decoration-[0.08em] underline-offset-[0.12em]">
+          {highlight}
+        </span>
+        {after}
+      </motion.h1>
 
-        <motion.h1
-          {...item(1)}
-          className="mt-7 max-w-4xl text-4xl leading-[1.08] font-semibold tracking-tight text-balance text-ink sm:text-5xl lg:text-6xl"
-        >
-          {before}
-          <span className="bg-gradient-to-r from-brand to-amber-500 bg-clip-text text-transparent">
-            {highlight}
-          </span>
-          {after}
-        </motion.h1>
-
-        <motion.p
-          {...item(2)}
-          className="mt-6 max-w-2xl text-base leading-relaxed text-pretty text-soft sm:text-lg"
-        >
+      <motion.div
+        {...item(2)}
+        className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end"
+      >
+        <p className="max-w-xl text-base leading-relaxed text-pretty text-soft sm:text-lg">
           {site.ui.heroNote}
-        </motion.p>
-
-        <motion.div
-          {...item(3)}
-          className="mt-9 flex flex-col items-center gap-3 sm:flex-row"
-        >
+        </p>
+        <div className="flex flex-wrap items-center gap-3">
           <a
             href="#work"
-            className="group inline-flex h-11 items-center gap-2 rounded-full bg-ink px-6 text-sm font-medium text-white shadow-sm transition hover:bg-zinc-700"
+            className="group inline-flex h-11 items-center gap-2 rounded-full bg-ink px-6 text-sm font-medium text-white transition hover:bg-zinc-700"
           >
             {site.ui.heroViewWork}
             <ArrowRight
@@ -82,28 +70,31 @@ export function HeroSection() {
           </a>
           <a
             href="#contact"
-            className="inline-flex h-11 items-center rounded-full border border-line bg-panel px-6 text-sm font-medium text-ink shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50"
+            className="inline-flex h-11 items-center rounded-full border border-zinc-300 bg-panel px-6 text-sm font-medium text-ink transition hover:border-zinc-400"
           >
             {site.ui.heroContact}
           </a>
-        </motion.div>
+        </div>
+      </motion.div>
 
-        <motion.dl
-          {...item(4)}
-          className="mt-14 grid w-full max-w-2xl grid-cols-3 divide-x divide-line rounded-2xl border border-line bg-panel/70 py-5 shadow-sm backdrop-blur"
-        >
-          {site.ui.stats.map((stat) => (
-            <div key={stat.label} className="flex flex-col-reverse gap-1 px-3">
-              <dt className="text-xs leading-snug text-soft sm:text-sm">
-                {stat.label}
-              </dt>
-              <dd className="text-2xl font-semibold tracking-tight text-ink tabular-nums sm:text-3xl">
-                {stat.value}
-              </dd>
-            </div>
-          ))}
-        </motion.dl>
-      </div>
+      <motion.dl
+        {...item(3)}
+        className="mt-14 grid grid-cols-3 gap-6 border-t border-zinc-300 pt-6 sm:mt-20"
+      >
+        {site.ui.stats.map((stat) => (
+          <div
+            key={stat.label}
+            className="flex flex-col-reverse justify-end gap-1"
+          >
+            <dt className="text-xs leading-snug text-soft sm:text-sm">
+              {stat.label}
+            </dt>
+            <dd className="text-3xl font-semibold tracking-tight text-ink tabular-nums sm:text-5xl">
+              {stat.value}
+            </dd>
+          </div>
+        ))}
+      </motion.dl>
     </section>
   )
 }

@@ -1,6 +1,7 @@
 "use client"
 
 import { useSiteCopy } from "@/components/locale-provider"
+import { ApproachSection } from "@/components/portfolio/approach-section"
 import { ContactSection } from "@/components/portfolio/contact-section"
 import { HeroSection } from "@/components/portfolio/hero-section"
 import { JourneyCard } from "@/components/portfolio/journey-card"
@@ -11,7 +12,6 @@ import {
   useActiveSectionHash,
 } from "@/components/portfolio/site-header"
 import { StackSection } from "@/components/portfolio/stack-section"
-import { TechMarquee } from "@/components/portfolio/tech-marquee"
 
 export function HomeView() {
   const site = useSiteCopy()
@@ -23,9 +23,8 @@ export function HomeView() {
 
       <main>
         <HeroSection />
-        <TechMarquee />
 
-        <section id="work" className="sheet scroll-mt-20 py-20 sm:py-28">
+        <section id="work" className="sheet scroll-mt-20 pb-20 sm:pb-28">
           <SectionHead
             eyebrow={site.ui.kickers.projects}
             title={site.work.title}
@@ -35,9 +34,19 @@ export function HomeView() {
           <ProjectGrid projects={site.projects} />
         </section>
 
+        <section id="approach" className="sheet scroll-mt-20 pb-20 sm:pb-28">
+          <SectionHead
+            eyebrow={site.ui.kickers.approach}
+            title={site.approach.title}
+            note={site.approach.intro}
+            className="mb-12"
+          />
+          <ApproachSection />
+        </section>
+
         <section
           id="about"
-          className="scroll-mt-20 border-y border-line bg-panel/60 py-20 sm:py-28"
+          className="scroll-mt-20 border-y border-line bg-panel py-20 sm:py-28"
         >
           <div className="sheet grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-16">
             <div>

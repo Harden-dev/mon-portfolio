@@ -52,8 +52,8 @@ export type ResolvedSite = {
   }
   social: { github: string; linkedin: string }
   ui: {
-    /** Small pill above the hero title. */
-    heroBadge: string
+    /** Plain line above the hero title, after the name. */
+    heroKicker: string
     /** Hero title, split so the middle phrase can carry the accent. */
     heroTitle: { before: string; highlight: string; after: string }
     heroNote: string
@@ -62,6 +62,7 @@ export type ResolvedSite = {
     heroContact: string
     kickers: {
       projects: string
+      approach: string
       about: string
       skills: string
       contact: string
@@ -78,9 +79,13 @@ export type ResolvedSite = {
     showFewerProjects: string
     copyEmail: string
     copied: string
-    marqueeLabel: string
     railLabel: string
     languageToggle: string
+  }
+  approach: {
+    title: string
+    intro: string
+    steps: readonly { title: string; body: string; points: readonly string[] }[]
   }
   stack: {
     title: string
@@ -106,6 +111,7 @@ type MessageBundle = {
   projects: ProjectCopy
   contact: { headline: string; sub: string; cta: string }
   ui: ResolvedSite["ui"]
+  approach: ResolvedSite["approach"]
   stack: ResolvedSite["stack"]
 }
 
@@ -309,6 +315,7 @@ const messages: Record<Locale, MessageBundle> = {
     ],
     nav: [
       { label: "Work", href: "#work" },
+      { label: "Approach", href: "#approach" },
       { label: "About", href: "#about" },
       { label: "Stack", href: "#stack" },
       { label: "Contact", href: "#contact" },
@@ -325,7 +332,7 @@ const messages: Record<Locale, MessageBundle> = {
       cta: "Email me",
     },
     ui: {
-      heroBadge: "Full-stack web developer · Abidjan",
+      heroKicker: "Full-stack web developer in Abidjan",
       heroTitle: {
         before: "I build web apps ",
         highlight: "businesses run on",
@@ -342,6 +349,7 @@ const messages: Record<Locale, MessageBundle> = {
       heroContact: "Get in touch",
       kickers: {
         projects: "Work",
+        approach: "Approach",
         about: "About",
         skills: "Stack",
         contact: "Contact",
@@ -362,9 +370,30 @@ const messages: Record<Locale, MessageBundle> = {
       showFewerProjects: "Show fewer",
       copyEmail: "Copy email",
       copied: "Copied",
-      marqueeLabel: "Technologies I ship with",
       railLabel: "Sections",
       languageToggle: "Language",
+    },
+    approach: {
+      title: "From the database to the screen, in that order.",
+      intro:
+        "Three layers, built one on top of the other, so what the customer sees rests on records that hold.",
+      steps: [
+        {
+          title: "Data & secure APIs",
+          body: "The schema comes first: what is stored, who owns it, who may read or change it.",
+          points: ["Database design", "REST APIs", "Role-based access"],
+        },
+        {
+          title: "Admin tools",
+          body: "The back office the staff live in every day: records, requests, planning, moderation.",
+          points: ["Dashboards", "Workflows", "Notifications"],
+        },
+        {
+          title: "Customer-facing apps",
+          body: "Then the part people outside the company use — fast, clear and tied to the same data.",
+          points: ["Vue & Nuxt front ends", "Payments", "Deployment"],
+        },
+      ],
     },
     stack: {
       title: "Tools I use in production",
@@ -410,6 +439,7 @@ const messages: Record<Locale, MessageBundle> = {
     ],
     nav: [
       { label: "Projets", href: "#work" },
+      { label: "Approche", href: "#approach" },
       { label: "À propos", href: "#about" },
       { label: "Stack", href: "#stack" },
       { label: "Contact", href: "#contact" },
@@ -426,7 +456,7 @@ const messages: Record<Locale, MessageBundle> = {
       cta: "M’écrire",
     },
     ui: {
-      heroBadge: "Développeur web full-stack · Abidjan",
+      heroKicker: "Développeur web full-stack à Abidjan",
       heroTitle: {
         before: "Je développe des applications web ",
         highlight: "qui font tourner les entreprises",
@@ -443,6 +473,7 @@ const messages: Record<Locale, MessageBundle> = {
       heroContact: "Me contacter",
       kickers: {
         projects: "Projets",
+        approach: "Approche",
         about: "À propos",
         skills: "Stack",
         contact: "Contact",
@@ -463,9 +494,34 @@ const messages: Record<Locale, MessageBundle> = {
       showFewerProjects: "Voir moins",
       copyEmail: "Copier l’email",
       copied: "Copié",
-      marqueeLabel: "Technologies que j’utilise en production",
       railLabel: "Sections",
       languageToggle: "Langue",
+    },
+    approach: {
+      title: "De la base de données à l’écran, dans cet ordre.",
+      intro:
+        "Trois couches construites l’une sur l’autre, pour que ce que voit le client repose sur des données solides.",
+      steps: [
+        {
+          title: "Données & APIs sécurisées",
+          body: "Le schéma d’abord : ce qui est stocké, à qui ça appartient, qui peut le lire ou le modifier.",
+          points: [
+            "Conception de base de données",
+            "APIs REST",
+            "Gestion des rôles",
+          ],
+        },
+        {
+          title: "Outils d’administration",
+          body: "Le back-office dans lequel les équipes passent leurs journées : dossiers, demandes, planning, modération.",
+          points: ["Tableaux de bord", "Workflows", "Notifications"],
+        },
+        {
+          title: "Applications client",
+          body: "Puis la partie utilisée hors de l’entreprise — rapide, claire et branchée sur les mêmes données.",
+          points: ["Interfaces Vue & Nuxt", "Paiements", "Mise en production"],
+        },
+      ],
     },
     stack: {
       title: "Les outils que j’utilise en production",
@@ -517,6 +573,7 @@ export function resolveSite(locale: Locale): ResolvedSite {
     },
     social: siteStatic.social,
     ui: m.ui,
+    approach: m.approach,
     stack: m.stack,
   }
 }

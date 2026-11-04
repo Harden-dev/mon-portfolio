@@ -14,7 +14,7 @@ export function Reveal({
   children,
   className,
   delay = 0,
-  y = 16,
+  y = 14,
 }: {
   children: React.ReactNode
   className?: string
@@ -26,8 +26,8 @@ export function Reveal({
   return (
     <motion.div
       className={className}
-      initial={reduce ? false : { opacity: 0, y, filter: "blur(6px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      initial={reduce ? false : { opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, ease: EASE, delay }}
     >

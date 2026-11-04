@@ -7,7 +7,14 @@ import { useSiteCopy } from "@/components/locale-provider"
 import { LanguageToggle } from "@/components/portfolio/language-toggle"
 import { cn } from "@/lib/utils"
 
-const SECTION_IDS = ["home", "work", "about", "stack", "contact"] as const
+const SECTION_IDS = [
+  "home",
+  "work",
+  "approach",
+  "about",
+  "stack",
+  "contact",
+] as const
 const PROBE_OFFSET_PX = 140
 
 export function useActiveSectionHash() {
@@ -82,7 +89,7 @@ export function SiteHeader({ activeHash }: { activeHash: string }) {
 
         <nav
           aria-label={site.ui.railLabel}
-          className="hidden items-center gap-1 rounded-full border border-line bg-panel/70 p-1 shadow-sm backdrop-blur md:flex"
+          className="hidden items-center gap-1 rounded-full border border-line bg-panel/70 p-1 backdrop-blur md:flex"
         >
           {site.nav.map((item) => (
             <a
@@ -105,7 +112,7 @@ export function SiteHeader({ activeHash }: { activeHash: string }) {
           <LanguageToggle />
           <a
             href={site.contact.mailHref}
-            className="hidden h-10 items-center rounded-full bg-ink px-4 text-sm font-medium whitespace-nowrap text-white shadow-sm transition hover:bg-zinc-700 sm:inline-flex"
+            className="hidden h-10 items-center rounded-full bg-ink px-4 text-sm font-medium whitespace-nowrap text-white transition hover:bg-zinc-700 sm:inline-flex"
           >
             {site.contact.cta}
           </a>
