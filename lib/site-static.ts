@@ -116,7 +116,7 @@ export const siteStatic = {
    *  Each slug must exist in `ICON_BY_SLUG` (custom-icon.tsx). */
   aiTools: [
     { label: "Claude", slug: "claude" },
-    { label: "GitHub Copilot", slug: "githubcopilot" },
+    { label: "ChatGPT", slug: "openai" },
     { label: "Cursor", slug: "cursor" },
     { label: "Gemini", slug: "googlegemini" },
   ],
