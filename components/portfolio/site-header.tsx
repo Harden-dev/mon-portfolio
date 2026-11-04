@@ -77,7 +77,7 @@ export function SiteHeader({ activeHash }: { activeHash: string }) {
           className="flex h-11 min-w-0 shrink items-center gap-2.5 text-base font-semibold tracking-tight whitespace-nowrap text-ink"
         >
           <span
-            className="flex size-8 items-center justify-center rounded-lg bg-ink text-sm font-semibold text-white"
+            className="flex size-8 items-center justify-center rounded-lg bg-ink font-heading text-sm font-semibold text-white"
             aria-hidden
           >
             M

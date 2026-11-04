@@ -41,7 +41,8 @@ A light, professional page set like an editorial layout: light grey ground (`pap
 - **Palette** in `:root` of `app/globals.css`, mapped via `@theme inline`: `paper`, `panel`, `ink` / `soft` / `faint`, `line`, `brand` (#ea580c) + `brand-soft`, `live` (green). Primary buttons are `bg-ink` pills, secondary are white pills with a `zinc-300` border.
 - **One accent.** `brand` is used for the hero underline, section eyebrows and the `01`, `02`… numbers — never large filled areas. `live` means "online" and nothing else.
 - **Numbered, editorial structure.** Hero: plain "name, role" line, large left-aligned title with the highlighted phrase underlined in brand, note + actions, stats on a rule. Projects are numbered cards (`project-grid.tsx`: number, domain · year meta line, title, description, stack chips, status), first 6 shown then "Show all". The approach section (`approach-section.tsx`) is three numbered columns separated by rules.
-- **One family.** Geist (`--font-geist`). Hierarchy from size and weight; figures use `tabular-nums`.
+- **Two families.** Bricolage Grotesque (`--font-bricolage` → `font-heading`/`font-display`) for `h1`–`h3` (base rule in `globals.css`), the hero stat figures and the "M" monogram. Atkinson Hyperlegible Next (`--font-atkinson` → `font-sans`) for everything else. Figures use `tabular-nums`.
+- **Justified text** (`text-justify hyphens-auto`) for the About paragraph and the text inside cards (project descriptions, timeline details). `hyphens-auto` relies on `<html lang>`, which the locale provider keeps in sync; keep it to avoid rivers.
 - Section headings go through `SectionHead` (`components/portfolio/motion.tsx`).
 - Nav hrefs in the bundles are bare hashes (`#work`); header and footer render them as `/#work` so they still work from the 404.
 - Only a light theme is implemented.

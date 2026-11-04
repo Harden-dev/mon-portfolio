@@ -79,7 +79,7 @@ function ProjectCard({
       <h3 className="mt-3 text-xl font-semibold tracking-tight text-ink">
         {project.title}
       </h3>
-      <p className="mt-2.5 text-sm leading-relaxed text-soft">
+      <p className="mt-2.5 text-justify text-sm leading-relaxed hyphens-auto text-soft">
         {project.description}
       </p>
 

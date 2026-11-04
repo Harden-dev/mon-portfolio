@@ -61,7 +61,7 @@ export function HomeView() {
                 title={site.about.title}
               />
               <Reveal delay={0.06}>
-                <p className="mt-6 text-base leading-relaxed text-pretty text-soft sm:text-lg">
+                <p className="mt-6 text-justify text-base leading-relaxed text-pretty hyphens-auto text-soft sm:text-lg">
                   {site.about.body}
                 </p>
                 <dl className="mt-8 grid gap-4 border-t border-line pt-6 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
