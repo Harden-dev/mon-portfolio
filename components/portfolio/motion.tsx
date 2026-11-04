@@ -3,6 +3,8 @@
 import * as React from "react"
 import { motion, useReducedMotion } from "motion/react"
 
+import { cn } from "@/lib/utils"
+
 /** Every motion on the page shares this curve, so they read as one hand. */
 export const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -41,20 +43,33 @@ export function SectionHead({
   title,
   note,
   className,
+  dark = false,
 }: {
   eyebrow: string
   title: string
   note?: string
   className?: string
+  /** Set on the dark band so the title and note invert. */
+  dark?: boolean
 }) {
   return (
     <Reveal className={className}>
       <p className="text-sm font-medium text-brand">{eyebrow}</p>
-      <h2 className="mt-2 text-3xl font-semibold tracking-tight text-balance text-ink sm:text-4xl">
+      <h2
+        className={cn(
+          "mt-2 text-3xl font-semibold tracking-tight text-balance sm:text-4xl",
+          dark ? "text-white" : "text-ink"
+        )}
+      >
         {title}
       </h2>
       {note ? (
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-soft">
+        <p
+          className={cn(
+            "mt-4 max-w-2xl text-base leading-relaxed",
+            dark ? "text-zinc-400" : "text-soft"
+          )}
+        >
           {note}
         </p>
       ) : null}

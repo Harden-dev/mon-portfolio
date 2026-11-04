@@ -34,14 +34,20 @@ export function HomeView() {
           <ProjectGrid projects={site.projects} />
         </section>
 
-        <section id="approach" className="sheet scroll-mt-20 pb-20 sm:pb-28">
-          <SectionHead
-            eyebrow={site.ui.kickers.approach}
-            title={site.approach.title}
-            note={site.approach.intro}
-            className="mb-12"
-          />
-          <ApproachSection />
+        <section
+          id="approach"
+          className="scroll-mt-16 bg-ink py-20 text-white sm:py-28"
+        >
+          <div className="sheet">
+            <SectionHead
+              dark
+              eyebrow={site.ui.kickers.approach}
+              title={site.approach.title}
+              note={site.approach.intro}
+              className="mb-12"
+            />
+            <ApproachSection />
+          </div>
         </section>
 
         <section

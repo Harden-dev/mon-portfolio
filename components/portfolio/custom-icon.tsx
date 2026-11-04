@@ -1,8 +1,12 @@
 import type { SimpleIcon } from "simple-icons"
 import {
   siAuth0,
+  siClaude,
   siCloudinary,
+  siCursor,
   siDocker,
+  siGithubcopilot,
+  siGooglegemini,
   siHtml5,
   siJavascript,
   siLaravel,
@@ -36,6 +40,11 @@ const ICON_BY_SLUG: Record<string, SimpleIcon> = {
   auth0: siAuth0,
   docker: siDocker,
   cloudinary: siCloudinary,
+  /* AI tools, shown in the hero orbit (`siteStatic.aiTools`). */
+  claude: siClaude,
+  githubcopilot: siGithubcopilot,
+  cursor: siCursor,
+  googlegemini: siGooglegemini,
 }
 
 type CustomIconProps = {

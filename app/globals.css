@@ -173,3 +173,23 @@
     animation: none;
   }
 }
+
+/* ── Hero orbit ─────────────────────────────────────────────────────────── */
+
+/* The one looping motion on the page: rings turn slowly behind the hero.
+   Direction and duration are set inline per ring. */
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.orbit-spin {
+  animation: orbit-spin var(--orbit-duration, 60s) linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-spin {
+    animation: none;
+  }
+}
